@@ -25,7 +25,7 @@ def after_request(response):
 def index():
 	return 'this is an index route'
 
-if __name__ = '__main__':
+if __name__ == '__main__':
 	models.init_database()
 	try: 
 		models.User.create_a_user(
