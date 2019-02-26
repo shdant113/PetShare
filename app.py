@@ -6,36 +6,36 @@ from flask import Flask, g
 # from flask_bcrypt import check_password_hash
 
 # import forms
-# import models
+import models
 import config
 
 app = Flask(__name__)
 
-# @app.before_request
-# def before_request():
-# 	g.db = models.DATABASE
-# 	g.db.connect()
+@app.before_request
+def before_request():
+	g.db = models.DATABASE
+	g.db.connect()
 
-# @app.after_request
-# def after_request(response):
-# 	g.db.close()
-# 	return response
+@app.after_request
+def after_request(response):
+	g.db.close()
+	return response
 
 @app.route('/')
 def index():
 	return 'this is an index route'
 
-# if __name__ = '__main__':
-# 	models.init_database()
-# 	try: 
-# 		models.User.create_a_user(
-# 			username = 'admin',
-# 			email = 'admin@admin.com',
-# 			password = 'admin',
-# 			admin = True
-# 		)
-# 	except ValueError: 
-# 		pass
+if __name__ = '__main__':
+	models.init_database()
+	try: 
+		models.User.create_a_user(
+			username = 'admin',
+			email = 'admin@admin.com',
+			password = 'admin',
+			admin = True
+		)
+	except ValueError: 
+		pass
 
 app.run(debug = config.DEBUG, port = config.PORT)
 
