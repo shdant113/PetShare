@@ -33,7 +33,7 @@ class Pet(Model):
 	age = IntegerField()
 	created_on = DateTimeField(default = datetime.datetime.now)
 	owner = ForeignKeyField(User, related_name = 'pet_owner')
-	special_requirements = TextField(max_length = 1000)
+	# special_requirements = TextField(max_length = 1000)
 
 	class Meta:
 		database = DATABASE
@@ -66,7 +66,7 @@ class Post(Model):
 
 def init_database():
 	DATABASE.connect()
-	DATABASE.create_tables([User, Pets], safe = True)
+	DATABASE.create_tables([User, Pet], safe = True)
 	DATABASE.close()
 
 
