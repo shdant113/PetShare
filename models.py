@@ -11,6 +11,8 @@ class User(UserMixin, Model):
 	password = CharField(max_length = 30)
 	date_joined = DateTimeField(default = datetime.datetime.now)
 	admin_status = BooleanField(default = False)
+	bio = TextField()
+	location = CharField()
 
 	class Meta:
 		database = DATABASE
@@ -33,7 +35,7 @@ class Pet(Model):
 	age = IntegerField()
 	created_on = DateTimeField(default = datetime.datetime.now)
 	owner = ForeignKeyField(User, related_name = 'pet_owner')
-	# special_requirements = TextField(max_length = 1000)
+	special_requirements = TextField()
 
 	class Meta:
 		database = DATABASE
@@ -50,14 +52,17 @@ class Pet(Model):
 		except IntegrityError:
 			raise ValueError('Invalid inputs.')
 
+class Sitter(Model):
+	user = ForeignKeyField(User, related_name = 'sitter')
+
+	class Meta:
+		database = DATABASE
+
 class Post(Model):
 	timestamp = DateTimeField(default = datetime.datetime.now)
-	user = ForeignKeyField(
-		model = User,
-		backref = 'posts'
-	)
-	pet # foreign key
-	sitter # foreign key -- initialized to null
+	user = ForeignKeyField(User, backref = 'posts')
+	pet = ForeignKeyField(Pet, backref = 'posts')
+	sitter = ForeignKeyField(Sitter, null = True, backref = 'posts')
 	content = TextField()
 
 	class Meta:
@@ -66,7 +71,7 @@ class Post(Model):
 
 def init_database():
 	DATABASE.connect()
-	DATABASE.create_tables([User, Pet], safe = True)
+	DATABASE.create_tables([User, Pet, Sitter, Post], safe = True)
 	DATABASE.close()
 
 
