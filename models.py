@@ -1,4 +1,3 @@
-
 from peewee import *
 from flask_login import UserMixin
 from flask_bcrypt import generate_password_hash
@@ -30,7 +29,7 @@ class User(UserMixin, Model):
 
 class Pet(Model):
 	name = CharField()
-	pet_type = CharField()
+	pet_type = CharField() # enum/CREATE TYPE
 	age = IntegerField()
 	created_on = DateTimeField(default = datetime.datetime.now)
 	owner = ForeignKeyField(User, related_name = 'pet_owner')
@@ -57,6 +56,8 @@ class Post(Model):
 		model = User,
 		backref = 'posts'
 	)
+	pet # foreign key
+	sitter # foreign key -- initialized to null
 	content = TextField()
 
 	class Meta:
