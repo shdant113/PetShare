@@ -1,15 +1,16 @@
 
 from flask import Flask, g
-# from flask import render_template, flash, redirect, url_for
-# from flask_login import (LoginManager, login_user, logout_user,
-# login_required, current_user)
+from flask import render_template, flash, redirect, url_for
+from flask_login import (LoginManager, login_user, logout_user,
+login_required, current_user)
 # from flask_bcrypt import check_password_hash
 
-# import forms
+import forms
 import models
 import config
 
 app = Flask(__name__)
+app.secret_key = 'sdjsdijsd'
 
 @app.before_request
 def before_request():
@@ -24,6 +25,21 @@ def after_request(response):
 @app.route('/')
 def index():
 	return 'this is an index route'
+
+@app.route('/register', methods=('GET', 'POST'))
+def register():
+	form = forms.RegisterForm()
+	# POST request
+	if form.validate_on_submit():
+		flash('Successfully registered!', 'success')
+		models.User.create_a_user(
+			username=form.username.data,
+			email=form.email.data,
+			password=form.password.data
+		)
+		return redirect(url_for('index'))
+	# GET request
+	return render_template('register.html', form=form)
 
 if __name__ == '__main__':
 	models.init_database()
