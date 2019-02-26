@@ -7,6 +7,7 @@ DATABASE = SqliteDatabase('petsdb.db')
 
 class User(UserMixin, Model):
 	username = CharField(unique = True)
+	display_name = CharField()
 	email = CharField(unique = True)
 	password = CharField(max_length = 30)
 	date_joined = DateTimeField(default = datetime.datetime.now)
@@ -29,12 +30,13 @@ class User(UserMixin, Model):
 		except IntegrityError:
 			raise ValueError('User already exists.')
 
+
 class Pet(Model):
 	name = CharField()
 	pet_type = CharField() # enum/CREATE TYPE
 	age = IntegerField()
 	created_on = DateTimeField(default = datetime.datetime.now)
-	owner = ForeignKeyField(User, related_name = 'pet_owner')
+	owner = ForeignKeyField(User, related_name = 'owner_pet')
 	special_requirements = TextField()
 
 	class Meta:
@@ -52,18 +54,15 @@ class Pet(Model):
 		except IntegrityError:
 			raise ValueError('Invalid inputs.')
 
-class Sitter(Model):
-	user = ForeignKeyField(User, related_name = 'sitter')
-
-	class Meta:
-		database = DATABASE
 
 class Post(Model):
 	timestamp = DateTimeField(default = datetime.datetime.now)
 	user = ForeignKeyField(User, backref = 'posts')
 	pet = ForeignKeyField(Pet, backref = 'posts')
-	sitter = ForeignKeyField(Sitter, null = True, backref = 'posts')
+	requested_time = DateTimeField()
+	sitter = ForeignKeyField(User, null = True, backref = 'posts')
 	content = TextField()
+	job_accepted = BooleanField(default = False)
 
 	class Meta:
 		database = DATABASE
