@@ -76,6 +76,7 @@ def login():
 	return render_template('login.html', form = form)
 
 ''' posting '''
+@login_required
 @app.route('/new_post', methods = ('GET', 'POST'))
 def new_post():
 	form = forms.PostForm()
@@ -87,6 +88,28 @@ def new_post():
 		)
 		return redirect(url_for('dashboard'))
 	return render_template('post.html', form = form)
+
+''' add a new pet '''
+@login_required
+@app.route('/new_pet', methods = ('GET', 'POST'))
+def new_pet():
+	form = forms.PetForm()
+	if form.validate_on_sumbit():
+		models.Pet.create(
+			name = form.name.data,
+			age = form.age.data,
+			pet_type = form.pet_type.data,
+			special_requirements = form.special_requirements.data,
+			owner = g.user._get_current_object()
+		)
+		return redirect(url_for('add-pet'))
+	return render_template('add-pet.html', form = form)
+
+''' accept a job -- click on post '''
+# @login_required
+# @app.route('/accept_job', methods = ('GET', 'POST'))
+# def accept_job():
+
 	
 ''' initialize database '''
 if __name__ == '__main__':
