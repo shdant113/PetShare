@@ -59,7 +59,9 @@ class RegisterForm(Form):
         ])
     password2 = PasswordField(
         'Confirm Password',
-        validators = [DataRequired()]
+        validators = [
+            DataRequired()
+        ]
     )
 
 ''' login '''
@@ -67,22 +69,28 @@ class LoginForm(Form):
     email = StringField(
         'Email', 
         validators = [
-        DataRequired(), 
-        Email()
+            DataRequired(), 
+            Email()
         ]
     )
     password = PasswordField(
         'Password', 
         validators = [
-        DataRequired()
+            DataRequired()
         ]
     )
 
 ''' posting '''
 class PostForm(Form):
     content = TextAreaField(
-        "enter POST here", 
+        "List all the details!", 
         validators = [
-        DataRequired()
+            DataRequired()
+        ]
+    )
+    requested_time = DateTimeField(
+        "When do you need a pet sitter?"
+        validators = [
+            DataRequired()
         ]
     )

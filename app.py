@@ -59,24 +59,21 @@ def register_account():
 	return render_template('register.html', form = form)
 
 ''' logging in '''
-@app.route('/login', methods=('GET', 'POST'))
+@app.route('/login', methods = ('GET', 'POST'))
 def login():
 	form = forms.LoginForm()
-	# POST
 	if form.validate_on_submit():
 		try:
-			 user = models.User.get(models.User.email == form.email.data)
+			 user = models.User.get(models.User.username == form.username.data)
 		except models.DoesNotExist:
-			flash('Your email or password doesnt match', 'error')
+			flash('Your email or password does not match.')
 		else:
 			if check_password_hash(user.password, form.password.data):
-				# login user / create session
 				login_user(user)
 				return redirect(url_for('index'))
 			else:
-				flash('Your email or password doesnt match', 'error')
-	# GET
-	return render_template('login.html', form=form)
+				flash('Your email or password does not match.')
+	return render_template('login.html', form = form)
 	
 ''' initialize database '''
 if __name__ == '__main__':
