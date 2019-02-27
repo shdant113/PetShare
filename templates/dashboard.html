@@ -2,6 +2,8 @@
 
 {% block content %}
     <h1>Petshare</h1>
-    <a href='#'>Add a post</a>
+    <a href="{{url_for('new_post')}}">Add a post</a>
     <a href="{{url_for('new_pet')}}" title="new_pet">New Pet</a>
+
+
 {% endblock %}

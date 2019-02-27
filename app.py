@@ -89,7 +89,7 @@ def logout():
 @app.route('/new_post', methods = ('GET', 'POST'))
 def new_post():
 	form = forms.PostForm()
-	if form.validate_on_sumbit():
+	if form.validate_on_submit():
 		models.Post.create(
 			user = g.user._get_current_object(),
 			content = form.content.data.strip(),
