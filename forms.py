@@ -4,6 +4,8 @@ from wtforms import StringField, PasswordField, TextAreaField
 from wtforms.validators import (DataRequired, Regexp, ValidationError, Email,
                                 Length, EqualTo)
 
+''' custom validators '''
+
 def username_exists(form, field):
     if User.select().where(User.username == field.data).exists():
         raise ValidationError('User with that username already exists.')
@@ -16,6 +18,16 @@ def email_exists(form, field):
     if User.select().where(User.email == field.data).exists():
         raise ValidationError('User with that email already exists.')
 
+def pet_matches(form, field):
+    if User.select().where(User.owner_pet.name != field.data):
+        raise ValidationError('You have not registered this pet.')
+
+def pet_exists(form, field):
+    if User.select().where(User.owner_pet.name == field.data).exists():
+        raise ValidationError('You already registered this pet.')
+
+
+''' registration '''
 class RegisterForm(Form):
     username = StringField(
         'Username',
@@ -56,28 +68,70 @@ class RegisterForm(Form):
         ])
     password2 = PasswordField(
         'Confirm Password',
-        validators = [DataRequired()]
+        validators = [
+            DataRequired()
+        ]
     )
 
+''' login '''
 class LoginForm(Form):
     email = StringField(
         'Email', 
         validators = [
-        DataRequired(), 
-        Email()
+            DataRequired(), 
+            Email()
         ]
     )
     password = PasswordField(
         'Password', 
         validators = [
-        DataRequired()
+            DataRequired()
         ]
     )
 
+''' posting '''
 class PostForm(Form):
-    content = TextAreaField(
-        "enter POST here", 
+    pet = ForeignKeyField(
+        "Pick your pet!",
         validators = [
-        DataRequired()
+            DataRequired(),
+            pet_matches
         ]
+    )
+    content = TextAreaField(
+        "List all the details!", 
+        validators = [
+            DataRequired()
+        ]
+    )
+    requested_time = DateTimeField(
+        "When do you need a pet sitter?"
+        validators = [
+            DataRequired()
+        ]
+    )
+
+''' new pet '''
+class PetForm(Form):
+    name = CharField(
+        "What is your pet's name?"
+        validators = [
+            DataRequired()
+            pet_exists
+        ]
+    )
+    pet_type = CharField(
+        "What type of animal is your pet?"
+        validators = [
+            DataRequired()
+        ]
+    )
+    age = IntegerField(
+        "How old is your pet?"
+        validators = [
+            DataRequired()
+        ]
+    )
+    special_requirements = TextField(
+        "Are there any special requirements a sitter needs to know about in order to take care of your pet?"
     )

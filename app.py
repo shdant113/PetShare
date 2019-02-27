@@ -7,13 +7,14 @@ import forms
 import models
 import config
 
+''' initialize program '''
 app = Flask(__name__)
 app.secret_key = config.SECRET_KEY
 
+''' login middleware '''
 login_manager = LoginManager()
 login_manager.init_app(app)
 # login_manager.login_view = 'login'
-
 @login_manager.user_loader
 def load_user(userid):
 	try:
@@ -21,6 +22,7 @@ def load_user(userid):
 	except models.DoesNotExist:
 		return None
 
+''' pool db connections '''
 @app.before_request
 def before_request():
 	g.db = models.DATABASE
@@ -31,16 +33,20 @@ def after_request(response):
 	g.db.close()
 	return response
 
+
+''' ROUTES '''
+
+''' index/dashboard '''
 @app.route('/')
-def index():
+def dashboard():
 	return render_template('dashboard.html')
 
+''' registration '''
 @app.route('/register', methods = ('GET', 'POST'))
 def register_account():
+	# for post method --> pass data from form
 	form = forms.RegisterForm()
-	print(form, ' this is form')
 	if form.validate_on_submit():
-		print('we got to the if')
 		models.User.create_a_user(
 			username = form.username.data,
 			display_name = form.display_name.data,
@@ -48,39 +54,71 @@ def register_account():
 			password = form.password.data,
 			email = form.email.data
 		)
-		print('we are making a user')
-		return redirect(url_for('index'))
-		print('we made a user')
-		print('we redirected')
+		return redirect(url_for('dashboard'))
+	# for get method --> retrieve form
 	return render_template('register.html', form = form)
 
-@app.route('/login', methods=('GET', 'POST'))
+''' logging in '''
+@app.route('/login', methods = ('GET', 'POST'))
 def login():
 	form = forms.LoginForm()
-	# POST
 	if form.validate_on_submit():
 		try:
-			 user = models.User.get(models.User.email == form.email.data)
+			 user = models.User.get(models.User.username == form.username.data)
 		except models.DoesNotExist:
-			flash('Your email or password doesnt match', 'error')
+			flash('Your email or password does not match.')
 		else:
 			if check_password_hash(user.password, form.password.data):
-				# login user / create session
 				login_user(user)
-				return redirect(url_for('index'))
+				return redirect(url_for('dashboard'))
 			else:
-				flash('Your email or password doesnt match', 'error')
-	# GET
-	return render_template('login.html', form=form)
+				flash('Your email or password does not match.')
+	return render_template('login.html', form = form)
 
+''' logging out '''
 @app.route('/logout')
 @login_required
 def logout():
 	# destroy our session
 	logout_user()
-	flash('Youve been logged out', 'success')
-	return redirect(url_for('index'))
+	return redirect(url_for('dashboard'))
 
+''' posting '''
+@login_required
+@app.route('/new_post', methods = ('GET', 'POST'))
+def new_post():
+	form = forms.PostForm()
+	if form.validate_on_sumbit():
+		models.Post.create(
+			user = g.user._get_current_object(),
+			content = form.content.data.strip(),
+			pet = form.pet.data
+		)
+		return redirect(url_for('dashboard'))
+	return render_template('post.html', form = form)
+
+''' add a new pet '''
+@login_required
+@app.route('/new_pet', methods = ('GET', 'POST'))
+def new_pet():
+	form = forms.PetForm()
+	if form.validate_on_sumbit():
+		models.Pet.create(
+			name = form.name.data,
+			age = form.age.data,
+			pet_type = form.pet_type.data,
+			special_requirements = form.special_requirements.data,
+			owner = g.user._get_current_object()
+		)
+		return redirect(url_for('add-pet'))
+	return render_template('add-pet.html', form = form)
+
+''' accept a job -- click on post '''
+# @login_required
+# @app.route('/accept_job', methods = ('GET', 'POST'))
+# def accept_job():
+	
+''' initialize database '''
 if __name__ == '__main__':
     models.init_database()
     try: 
