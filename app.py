@@ -102,7 +102,7 @@ def new_post():
 @app.route('/new_pet', methods = ('GET', 'POST'))
 def new_pet():
 	form = forms.PetForm()
-	if form.validate_on_sumbit():
+	if form.validate_on_submit():
 		models.Pet.create(
 			name = form.name.data,
 			age = form.age.data,
