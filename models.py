@@ -3,7 +3,11 @@ from flask_login import UserMixin
 from flask_bcrypt import generate_password_hash
 import datetime
 
-DATABASE = SqliteDatabase('petsdb.sqlite')
+DATABASE = PostgresqlDatabase(
+	'pets',
+	user = 's_admin',
+	password = 'administrator'
+)
 
 class User(UserMixin, Model):
 	username = CharField(unique = True)
@@ -23,14 +27,20 @@ class User(UserMixin, Model):
 	@classmethod
 	def create_a_user(cls, username, email, display_name, location, password, admin = False):
 		try:
-			cls.create(
-				username = username,
-				email = email,
-				password = generate_password_hash(password),
+			cls.select().where(cls.username == username).get()
+			cls.select().where(cls.display_name == display_name).get()
+			cls.select().where(cls.email == email).get()
+		except cls.DoesNotExist:
+			user = cls(
+				username = username, 
+				email = email, 
 				display_name = display_name,
-				location = location,
+				location = location, 
 				admin_status = admin
 			)
+			user.password = generate_password_hash(password)
+			user.save()
+			return user
 		except IntegrityError:
 			raise ValueError('user already exists')
 
@@ -46,17 +56,17 @@ class Pet(Model):
 	class Meta:
 		database = DATABASE
 
-	@classmethod
-	def create_a_pet(cls, name, pet_type, age, special_requirements):
-		try:
-			cls.create(
-				name = name,
-				pet_type = pet_type,
-				age = age,
-				special_requirements = special_requirements
-			)
-		except IntegrityError:
-			raise ValueError('Invalid inputs.')
+	# @classmethod
+	# def create_a_pet(cls, name, pet_type, age, special_requirements):
+	# 	try:
+	# 		cls.create(
+	# 			name = name,
+	# 			pet_type = pet_type,
+	# 			age = age,
+	# 			special_requirements = special_requirements
+	# 		)
+	# 	except IntegrityError:
+	# 		raise ValueError('Invalid inputs.')
 
 
 class Post(Model):

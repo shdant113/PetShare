@@ -39,3 +39,14 @@ class PetList(Resource):
 			location = ['form', 'json']
 		)
 		super().__init__()
+
+	@login_required
+	def get(self):
+		pets = [marshal(pets, pets_fields) for pet in models.Pet.select()]
+		return {'pets': pets}
+
+	def post(self):
+		arguments = self.reqparse.parse_args()
+		print(arguments, ' we are hitting args')
+		parsedPet = [marshal(models.Pet.create(**arguments), pets_fields)]
+		return parsedPet
