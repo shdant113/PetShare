@@ -4,6 +4,8 @@ from wtforms import StringField, PasswordField, TextAreaField
 from wtforms.validators import (DataRequired, Regexp, ValidationError, Email,
                                 Length, EqualTo)
 
+''' custom validators '''
+
 def username_exists(form, field):
     if User.select().where(User.username == field.data).exists():
         raise ValidationError('User with that username already exists.')
@@ -16,6 +18,7 @@ def email_exists(form, field):
     if User.select().where(User.email == field.data).exists():
         raise ValidationError('User with that email already exists.')
 
+''' registration '''
 class RegisterForm(Form):
     username = StringField(
         'Username',
@@ -59,6 +62,7 @@ class RegisterForm(Form):
         validators = [DataRequired()]
     )
 
+''' login '''
 class LoginForm(Form):
     email = StringField(
         'Email', 
@@ -74,6 +78,7 @@ class LoginForm(Form):
         ]
     )
 
+''' posting '''
 class PostForm(Form):
     content = TextAreaField(
         "enter POST here", 

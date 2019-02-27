@@ -7,13 +7,14 @@ import forms
 import models
 import config
 
+''' initialize program '''
 app = Flask(__name__)
 app.secret_key = config.SECRET_KEY
 
+''' login middleware '''
 login_manager = LoginManager()
 login_manager.init_app(app)
 # login_manager.login_view = 'login'
-
 @login_manager.user_loader
 def load_user(userid):
 	try:
@@ -21,6 +22,7 @@ def load_user(userid):
 	except models.DoesNotExist:
 		return None
 
+''' pool db connections '''
 @app.before_request
 def before_request():
 	g.db = models.DATABASE
@@ -31,16 +33,20 @@ def after_request(response):
 	g.db.close()
 	return response
 
-@app.route('/')
-def index():
-	return 'this is an index route'
 
+''' ROUTES '''
+
+''' index/dashboard '''
+@app.route('/')
+def dashboard():
+	return render_template('dashboard.html')
+
+''' registration '''
 @app.route('/register', methods = ('GET', 'POST'))
 def register_account():
+	# for post method --> pass data from form
 	form = forms.RegisterForm()
-	print(form, ' this is form')
 	if form.validate_on_submit():
-		print('we got to the if')
 		models.User.create_a_user(
 			username = form.username.data,
 			display_name = form.display_name.data,
@@ -48,13 +54,11 @@ def register_account():
 			password = form.password.data,
 			email = form.email.data
 		)
-		print('we are making a user')
 		return redirect(url_for('index'))
-		print('we made a user')
-		print('we redirected')
+	# for get method --> retrieve form
 	return render_template('register.html', form = form)
 
-@login_required
+''' logging in '''
 @app.route('/login', methods=('GET', 'POST'))
 def login():
 	form = forms.LoginForm()
@@ -74,7 +78,7 @@ def login():
 	# GET
 	return render_template('login.html', form=form)
 	
-
+''' initialize database '''
 if __name__ == '__main__':
     models.init_database()
     try: 
