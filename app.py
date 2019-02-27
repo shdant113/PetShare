@@ -111,9 +111,33 @@ def new_pet():
 			special_requirements = form.special_requirements.data,
 			owner = g.user._get_current_object().id
 		)
-		flash('Your pet is now registered.')
 		return redirect(url_for('dashboard'))
 	return render_template('add-pet.html', form = form)
+
+''' edit and update a pet '''
+@login_required
+@app.route('/update_pet/<name>', methods = ('GET', 'PUT'))
+def update_pet():
+	form = forms.PetForm()
+	if form.validate_on_submit():
+		models.Pet.update(
+			name = form.name.data,
+			age = form.age.data,
+			pet_type = form.pet_type.data,
+			special_requirements = form.special_requirements.data
+		)	
+		return redirect(url_for('dashboard'))
+	return render_template('edit-pet.html', form = form)
+
+''' delete a pet '''
+@login_required
+@app.route('/delete_pet/<name>', methods = ('GET', 'DELETE'))
+def delete_pet(name):
+	form = forms.DeletePetForm()
+	if form.validate_on_submit():
+		models.Pet.name.delete()
+		return redirect(url_for('dashboard'))
+	return render_template('delete-pet.html', form = form)
 
 ''' accept a job -- click on post '''
 # @login_required
