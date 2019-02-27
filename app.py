@@ -54,7 +54,6 @@ def register_account():
 		print('we redirected')
 	return render_template('register.html', form = form)
 
-@login_required
 @app.route('/login', methods=('GET', 'POST'))
 def login():
 	form = forms.LoginForm()
@@ -73,7 +72,14 @@ def login():
 				flash('Your email or password doesnt match', 'error')
 	# GET
 	return render_template('login.html', form=form)
-	
+
+@app.route('/logout')
+@login_required
+def logout():
+	# destroy our session
+	logout_user()
+	flash('Youve been logged out', 'success')
+	return redirect(url_for('index'))
 
 if __name__ == '__main__':
     models.init_database()
