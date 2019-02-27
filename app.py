@@ -33,7 +33,7 @@ def after_request(response):
 
 @app.route('/')
 def index():
-	return 'this is an index route'
+	return render_template('dashboard.html')
 
 @app.route('/register', methods = ('GET', 'POST'))
 def register_account():
