@@ -54,7 +54,7 @@ def register_account():
 			password = form.password.data,
 			email = form.email.data
 		)
-		return redirect(url_for('index'))
+		return redirect(url_for('dashboard'))
 	# for get method --> retrieve form
 	return render_template('register.html', form = form)
 
@@ -70,7 +70,7 @@ def login():
 		else:
 			if check_password_hash(user.password, form.password.data):
 				login_user(user)
-				return redirect(url_for('index'))
+				return redirect(url_for('dashboard'))
 			else:
 				flash('Your email or password does not match.')
 	return render_template('login.html', form = form)
@@ -81,7 +81,42 @@ def login():
 def logout():
 	# destroy our session
 	logout_user()
-	return redirect(url_for('index'))
+	return redirect(url_for('dashboard'))
+
+''' posting '''
+@login_required
+@app.route('/new_post', methods = ('GET', 'POST'))
+def new_post():
+	form = forms.PostForm()
+	if form.validate_on_sumbit():
+		models.Post.create(
+			user = g.user._get_current_object(),
+			content = form.content.data.strip(),
+			pet = form.pet.data
+		)
+		return redirect(url_for('dashboard'))
+	return render_template('post.html', form = form)
+
+''' add a new pet '''
+@login_required
+@app.route('/new_pet', methods = ('GET', 'POST'))
+def new_pet():
+	form = forms.PetForm()
+	if form.validate_on_sumbit():
+		models.Pet.create(
+			name = form.name.data,
+			age = form.age.data,
+			pet_type = form.pet_type.data,
+			special_requirements = form.special_requirements.data,
+			owner = g.user._get_current_object()
+		)
+		return redirect(url_for('add-pet'))
+	return render_template('add-pet.html', form = form)
+
+''' accept a job -- click on post '''
+# @login_required
+# @app.route('/accept_job', methods = ('GET', 'POST'))
+# def accept_job():
 	
 ''' initialize database '''
 if __name__ == '__main__':

@@ -18,6 +18,15 @@ def email_exists(form, field):
     if User.select().where(User.email == field.data).exists():
         raise ValidationError('User with that email already exists.')
 
+def pet_matches(form, field):
+    if User.select().where(User.owner_pet.name != field.data):
+        raise ValidationError('You have not registered this pet.')
+
+def pet_exists(form, field):
+    if User.select().where(User.owner_pet.name == field.data).exists():
+        raise ValidationError('You already registered this pet.')
+
+
 ''' registration '''
 class RegisterForm(Form):
     username = StringField(
@@ -82,6 +91,13 @@ class LoginForm(Form):
 
 ''' posting '''
 class PostForm(Form):
+    pet = ForeignKeyField(
+        "Pick your pet!",
+        validators = [
+            DataRequired(),
+            pet_matches
+        ]
+    )
     content = TextAreaField(
         "List all the details!", 
         validators = [
@@ -93,4 +109,29 @@ class PostForm(Form):
         validators = [
             DataRequired()
         ]
+    )
+
+''' new pet '''
+class PetForm(Form):
+    name = CharField(
+        "What is your pet's name?"
+        validators = [
+            DataRequired()
+            pet_exists
+        ]
+    )
+    pet_type = CharField(
+        "What type of animal is your pet?"
+        validators = [
+            DataRequired()
+        ]
+    )
+    age = IntegerField(
+        "How old is your pet?"
+        validators = [
+            DataRequired()
+        ]
+    )
+    special_requirements = TextField(
+        "Are there any special requirements a sitter needs to know about in order to take care of your pet?"
     )
