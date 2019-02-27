@@ -147,6 +147,15 @@ def delete_pet(name):
 		return redirect(url_for('dashboard'))
 	return render_template('delete-pet.html', form = form)
 
+'''user profile'''
+@app.route('/users/<id>')
+def get_user(id):
+	usr = models.User.select().where(models.User.id == id)
+	if usr:
+		return render_template('user_profile.html', user = usr.get())
+	else:
+		return redirect(url_for('dashboard'))
+
 ''' accept a job -- click on post '''
 # @login_required
 # @app.route('/accept_job', methods = ('GET', 'POST'))
