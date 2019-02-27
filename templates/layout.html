@@ -10,7 +10,7 @@
   <div class="container">
     <div class="row">
       <div class="col">
-          <h1>{% if current_user.is_authenticated %} Hello {% endif %}</h1>
+        <h3>{% if current_user.is_authenticated %}Hello {{current_user.username}}{% endif %}</h3>
       </div>
       <div class="col">
           {% if current_user.is_authenticated %}
