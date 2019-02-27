@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm as Form
 from models import User
-from wtforms import StringField, PasswordField, TextAreaField
+from wtforms import StringField, PasswordField, TextAreaField, DateTimeField, IntegerField
 from wtforms.validators import (DataRequired, Regexp, ValidationError, Email,
                                 Length, EqualTo)
 
@@ -91,7 +91,7 @@ class LoginForm(Form):
 
 ''' posting '''
 class PostForm(Form):
-    pet = ForeignKeyField(
+    pet = StringField(
         "Pick your pet!",
         validators = [
             DataRequired(),
@@ -105,7 +105,7 @@ class PostForm(Form):
         ]
     )
     requested_time = DateTimeField(
-        "When do you need a pet sitter?"
+        "When do you need a pet sitter?",
         validators = [
             DataRequired()
         ]
@@ -113,25 +113,25 @@ class PostForm(Form):
 
 ''' new pet '''
 class PetForm(Form):
-    name = CharField(
-        "What is your pet's name?"
+    name = StringField(
+        "What is your pet's name?",
         validators = [
-            DataRequired()
+            DataRequired(),
             pet_exists
         ]
     )
-    pet_type = CharField(
-        "What type of animal is your pet?"
+    pet_type = StringField(
+        "What type of animal is your pet?",
         validators = [
             DataRequired()
         ]
     )
     age = IntegerField(
-        "How old is your pet?"
+        "How old is your pet?",
         validators = [
             DataRequired()
         ]
     )
-    special_requirements = TextField(
+    special_requirements = StringField(
         "Are there any special requirements a sitter needs to know about in order to take care of your pet?"
     )
