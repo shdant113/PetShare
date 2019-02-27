@@ -7,14 +7,14 @@ DATABASE = SqliteDatabase('petsdb.sqlite')
 
 class User(UserMixin, Model):
 	username = CharField(unique = True)
-	display_name = CharField(default = self.username)
+	display_name = CharField(default = username)
 	email = CharField(unique = True)
 	password = CharField(max_length = 30)
 	date_joined = DateTimeField(default = datetime.datetime.now)
 	admin_status = BooleanField(default = False)
 	bio = TextField()
 	location = CharField()
-	schedule = ForeignKeyField(Post, related_name = 'schedule_user')
+	# schedule = ForeignKeyField(Post, related_name = 'schedule_user')
 	notifications = CharField(null = True)
 
 	class Meta:
@@ -33,6 +33,7 @@ class User(UserMixin, Model):
 			)
 		except IntegrityError:
 			print('there was an error')
+			raise ValueError('user already exists')
 
 
 class Pet(Model):
