@@ -34,13 +34,19 @@ class RegisterForm(Form):
             Email(),
             email_exists
         ])
-    # display_name = StringField(
-    #     'Display Name',
-    #     validators = [
-    #         DataRequired(),
-    #         display_name_exists
-    #     ]
-    # )
+    display_name = StringField(
+        'Display Name',
+        validators = [
+            DataRequired(),
+            display_name_exists
+        ]
+    )
+    location = StringField(
+        'Location',
+        validators = [
+            DataRequired()
+        ]
+    )
     password = PasswordField(
         'Password',
         validators = [

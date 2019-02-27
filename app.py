@@ -43,6 +43,8 @@ def register_account():
 		print('we got to the if')
 		models.User.create_a_user(
 			username = form.username.data,
+			display_name = form.display_name.data,
+			location = form.location.data,
 			password = form.password.data,
 			email = form.email.data
 		)
@@ -61,15 +63,15 @@ def login():
 
 if __name__ == '__main__':
 	models.init_database()
-	try: 
-		models.User.create_a_user(
-			username = 'admin',
-			email = 'admin@admin.com',
-			password = 'admin',
-			admin = True
-		)
-	except ValueError: 
-		pass
+	# try: 
+	# 	models.User.create_a_user(
+	# 		username = 'admin',
+	# 		email = 'admin@admin.com',
+	# 		password = 'admin',
+	# 		admin = True
+	# 	)
+	# except ValueError: 
+	# 	pass
 
 app.run(debug = config.DEBUG, port = config.PORT)
 

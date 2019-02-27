@@ -12,8 +12,8 @@ class User(UserMixin, Model):
 	password = CharField(max_length = 30)
 	date_joined = DateTimeField(default = datetime.datetime.now)
 	admin_status = BooleanField(default = False)
-	bio = TextField()
-	location = CharField()
+	bio = TextField(null=True)
+	location = CharField(null=True)
 	# schedule = ForeignKeyField(Post, related_name = 'schedule_user')
 	notifications = CharField(null = True)
 
@@ -21,7 +21,7 @@ class User(UserMixin, Model):
 		database = DATABASE
 
 	@classmethod
-	def create_a_user(cls, username, email, password, admin = False):
+	def create_a_user(cls, username, email, display_name, location, password, admin = False):
 		print('we are creating a user')
 		try:
 			print('we are in the try block')
@@ -29,6 +29,8 @@ class User(UserMixin, Model):
 				username = username,
 				email = email,
 				password = generate_password_hash(password),
+				display_name = display_name,
+				location = location,
 				admin_status = admin
 			)
 		except IntegrityError:
