@@ -1,16 +1,25 @@
-
-from flask import Flask, g
-from flask import render_template, flash, redirect, url_for
+from flask import Flask, g, render_template, flash, redirect, url_for
 from flask_login import (LoginManager, login_user, logout_user,
 login_required, current_user)
-# from flask_bcrypt import check_password_hash
+from flask_bcrypt import check_password_hash
 
 import forms
 import models
 import config
 
 app = Flask(__name__)
-app.secret_key = 'sdjsdijsd'
+app.secret_key = config.SECRET_KEY
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+# login_manager.login_view = 'login'
+
+@login_manager.user_loader
+def load_user(userid):
+	try:
+		return models.User.get(models.User.id == userid)
+	except models.DoesNotExist:
+		return None
 
 @app.before_request
 def before_request():
@@ -26,20 +35,29 @@ def after_request(response):
 def index():
 	return 'this is an index route'
 
-@app.route('/register', methods=('GET', 'POST'))
-def register():
+@app.route('/register', methods = ('GET', 'POST'))
+def register_account():
 	form = forms.RegisterForm()
-	# POST request
+	print(form, ' this is form')
 	if form.validate_on_submit():
-		flash('Successfully registered!', 'success')
+		print('we got to the if')
 		models.User.create_a_user(
-			username=form.username.data,
-			email=form.email.data,
-			password=form.password.data
+			username = form.username.data,
+			password = form.password.data,
+			email = form.email.data
 		)
+		print('we are making a user')
 		return redirect(url_for('index'))
-	# GET request
-	return render_template('register.html', form=form)
+		print('we made a user')
+		print('we redirected')
+	return render_template('register.html', form = form)
+
+@login_required
+@app.route('/login')
+def login():
+	print('hi')	
+	return 'you are here'
+	
 
 if __name__ == '__main__':
 	models.init_database()

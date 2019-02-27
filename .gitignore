@@ -1,1 +1,4 @@
 .env
+__pycache__
+petsdb.sqlite
+petsdb.db

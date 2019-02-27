@@ -3,24 +3,28 @@ from flask_login import UserMixin
 from flask_bcrypt import generate_password_hash
 import datetime
 
-DATABASE = SqliteDatabase('petsdb.db')
+DATABASE = SqliteDatabase('petsdb.sqlite')
 
 class User(UserMixin, Model):
 	username = CharField(unique = True)
-	display_name = CharField()
+	display_name = CharField(default = self.username)
 	email = CharField(unique = True)
 	password = CharField(max_length = 30)
 	date_joined = DateTimeField(default = datetime.datetime.now)
 	admin_status = BooleanField(default = False)
 	bio = TextField()
 	location = CharField()
+	schedule = ForeignKeyField(Post, related_name = 'schedule_user')
+	notifications = CharField(null = True)
 
 	class Meta:
 		database = DATABASE
 
 	@classmethod
 	def create_a_user(cls, username, email, password, admin = False):
+		print('we are creating a user')
 		try:
+			print('we are in the try block')
 			cls.create(
 				username = username,
 				email = email,
@@ -28,7 +32,7 @@ class User(UserMixin, Model):
 				admin_status = admin
 			)
 		except IntegrityError:
-			raise ValueError('User already exists.')
+			print('there was an error')
 
 
 class Pet(Model):
@@ -70,7 +74,7 @@ class Post(Model):
 
 def init_database():
 	DATABASE.connect()
-	DATABASE.create_tables([User, Pet, Sitter, Post], safe = True)
+	DATABASE.create_tables([User, Pet, Post], safe = True)
 	DATABASE.close()
 
 
