@@ -64,7 +64,7 @@ def login():
 	form = forms.LoginForm()
 	if form.validate_on_submit():
 		try:
-			 user = models.User.get(models.User.username == form.username.data)
+			 user = models.User.get(models.User.email == form.email.data)
 		except models.DoesNotExist:
 			flash('Your email or password does not match.')
 		else:
