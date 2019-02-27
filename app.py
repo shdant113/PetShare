@@ -74,6 +74,14 @@ def login():
 			else:
 				flash('Your email or password does not match.')
 	return render_template('login.html', form = form)
+
+''' logging out '''
+@app.route('/logout')
+@login_required
+def logout():
+	# destroy our session
+	logout_user()
+	return redirect(url_for('index'))
 	
 ''' initialize database '''
 if __name__ == '__main__':
