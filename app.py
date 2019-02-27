@@ -93,7 +93,8 @@ def new_post():
 		models.Post.create(
 			user = g.user._get_current_object(),
 			content = form.content.data.strip(),
-			pet = form.pet.data
+			pet = form.pet.data,
+			requested_time = form.requested_time.data()
 		)
 		return redirect(url_for('dashboard'))
 	return render_template('post.html', form = form)

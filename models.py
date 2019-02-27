@@ -63,7 +63,7 @@ class Post(Model):
 	timestamp = DateTimeField(default = datetime.datetime.now)
 	user = ForeignKeyField(User, backref = 'posts')
 	pet = ForeignKeyField(Pet, backref = 'posts')
-	requested_time = DateTimeField()
+	requested_time = DateField()
 	sitter = ForeignKeyField(User, null = True, backref = 'posts')
 	content = TextField()
 	job_accepted = BooleanField(default = False)

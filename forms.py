@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm as Form
 from models import *
-from wtforms import StringField, PasswordField, TextAreaField, DateTimeField, IntegerField
+from wtforms import StringField, PasswordField, TextAreaField, DateTimeField, IntegerField, DateField
 from wtforms.validators import (DataRequired, Regexp, ValidationError, Email,
                                 Length, EqualTo)
 
@@ -18,13 +18,14 @@ def email_exists(form, field):
     if User.select().where(User.email == field.data).exists():
         raise ValidationError('User with that email already exists.')
 
-def pet_matches(form, field):
-    if User.select().where(Pet.name != field.data):
-        raise ValidationError('You have not registered this pet.')
+# def pet_matches(form, field):
+#     if User.select().where(Pet.name != field.data):
+#         raise ValidationError('You have not registered this pet.')
 
-def pet_exists(form, field):
-    if Pet.select().where(Pet.name == field.data).exists():
-        raise ValidationError('You already registered this pet.')
+# def pet_exists(form, field):
+#     name = Pet.select().where(Pet.name == field.data)
+#     if User.select().where()
+        # raise ValidationError('You already registered this pet.')
 
 
 ''' registration '''
@@ -95,7 +96,7 @@ class PostForm(Form):
         "Pick your pet!",
         validators = [
             DataRequired(),
-            pet_matches
+            # pet_matches
         ]
     )
     content = TextAreaField(
@@ -104,7 +105,7 @@ class PostForm(Form):
             DataRequired()
         ]
     )
-    requested_time = DateTimeField(
+    requested_time = DateField(
         "When do you need a pet sitter?",
         validators = [
             DataRequired()
@@ -117,7 +118,7 @@ class PetForm(Form):
         "What is your pet's name?",
         validators = [
             DataRequired(),
-            pet_exists
+            # pet_exists
         ]
     )
     pet_type = StringField(
