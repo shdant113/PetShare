@@ -23,7 +23,7 @@
 
 ## Wireframes:
 
-|| https://puu.sh/CSxTM/2c5d9be9f2.png ||
-|| https://puu.sh/CSxU9/44ef3ae9b3.png ||
-|| https://puu.sh/CSxUr/7e76704823.png || 
-|| https://puu.sh/CSxUD/757bd08be7.png ||
+https://puu.sh/CSxTM/2c5d9be9f2.png
+https://puu.sh/CSxU9/44ef3ae9b3.png
+https://puu.sh/CSxUr/7e76704823.png 
+https://puu.sh/CSxUD/757bd08be7.png
