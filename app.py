@@ -74,6 +74,19 @@ def login():
 			else:
 				flash('Your email or password does not match.')
 	return render_template('login.html', form = form)
+
+''' posting '''
+@app.route('/new_post', methods = ('GET', 'POST'))
+def new_post():
+	form = forms.PostForm()
+	if form.validate_on_sumbit():
+		models.Post.create(
+			user = g.user._get_current_object(),
+			content = form.content.data.strip(),
+			pet = form.pet.data
+		)
+		return redirect(url_for('dashboard'))
+	return render_template('post.html', form = form)
 	
 ''' initialize database '''
 if __name__ == '__main__':
