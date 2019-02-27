@@ -13,7 +13,7 @@ class User(UserMixin, Model):
 	username = CharField(unique = True)
 	display_name = CharField(default = username)
 	email = CharField(unique = True)
-	password = CharField(max_length = 30)
+	password = CharField(max_length = 100)
 	date_joined = DateTimeField(default = datetime.datetime.now)
 	admin_status = BooleanField(default = False)
 	bio = TextField(null=True)

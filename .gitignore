@@ -2,3 +2,4 @@
 __pycache__
 petsdb.sqlite
 petsdb.db
+.vscode
