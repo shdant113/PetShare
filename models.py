@@ -22,9 +22,7 @@ class User(UserMixin, Model):
 
 	@classmethod
 	def create_a_user(cls, username, email, display_name, location, password, admin = False):
-		print('we are creating a user')
 		try:
-			print('we are in the try block')
 			cls.create(
 				username = username,
 				email = email,
@@ -34,7 +32,6 @@ class User(UserMixin, Model):
 				admin_status = admin
 			)
 		except IntegrityError:
-			print('there was an error')
 			raise ValueError('user already exists')
 
 

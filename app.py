@@ -27,6 +27,7 @@ def load_user(userid):
 def before_request():
 	g.db = models.DATABASE
 	g.db.connect()
+	g.user = current_user
 
 @app.after_request
 def after_request(response):
@@ -64,7 +65,7 @@ def login():
 	form = forms.LoginForm()
 	if form.validate_on_submit():
 		try:
-			 user = models.User.get(models.User.username == form.username.data)
+			 user = models.User.get(models.User.email == form.email.data)
 		except models.DoesNotExist:
 			flash('Your email or password does not match.')
 		else:
@@ -110,7 +111,7 @@ def new_pet():
 			special_requirements = form.special_requirements.data,
 			owner = g.user._get_current_object()
 		)
-		return redirect(url_for('add-pet'))
+		return redirect(url_for('new_pet'))
 	return render_template('add-pet.html', form = form)
 
 ''' accept a job -- click on post '''

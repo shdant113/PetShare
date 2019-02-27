@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm as Form
-from models import User
+from models import *
 from wtforms import StringField, PasswordField, TextAreaField, DateTimeField, IntegerField
 from wtforms.validators import (DataRequired, Regexp, ValidationError, Email,
                                 Length, EqualTo)
@@ -19,11 +19,11 @@ def email_exists(form, field):
         raise ValidationError('User with that email already exists.')
 
 def pet_matches(form, field):
-    if User.select().where(User.owner_pet.name != field.data):
+    if User.select().where(Pet.name != field.data):
         raise ValidationError('You have not registered this pet.')
 
 def pet_exists(form, field):
-    if User.select().where(User.owner_pet.name == field.data).exists():
+    if Pet.select().where(Pet.name == field.data).exists():
         raise ValidationError('You already registered this pet.')
 
 
