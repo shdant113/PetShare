@@ -109,9 +109,10 @@ def new_pet():
 			age = form.age.data,
 			pet_type = form.pet_type.data,
 			special_requirements = form.special_requirements.data,
-			owner = g.user._get_current_object()
+			owner = g.user._get_current_object().id
 		)
-		return redirect(url_for('new_pet'))
+		flash('Your pet is now registered.')
+		return redirect(url_for('dashboard'))
 	return render_template('add-pet.html', form = form)
 
 ''' accept a job -- click on post '''
