@@ -25,6 +25,13 @@
     <br>
     <div class="row">
       <div class="col">
+          <h1>
+              <a href="{{ url_for('dashboard') }}">Petshare</a>  
+          </h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
         {% with messages = get_flashed_messages(with_categories=True) %}
           {% if messages %}
             {% for category, message in messages %}
@@ -34,7 +41,7 @@
         {% endwith %}
       </div>
     </div>
-    
+
   </div>
 
   {%block content%}{% endblock %}
