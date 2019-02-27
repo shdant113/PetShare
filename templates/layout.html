@@ -8,6 +8,7 @@
 <body>
 
   <div class="container">
+
     <div class="row">
       <div class="col">
         <h3>{% if current_user.is_authenticated %}Hello {{current_user.username}}{% endif %}</h3>
@@ -21,6 +22,26 @@
           {% endif %}
       </div>
     </div>
+    <br>
+    <div class="row">
+      <div class="col">
+          <h1>
+              <a href="{{ url_for('dashboard') }}">Petshare</a>  
+          </h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        {% with messages = get_flashed_messages(with_categories=True) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class={{category}}>{{ messages }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+      </div>
+    </div>
+
   </div>
 
   {%block content%}{% endblock %}
