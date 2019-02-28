@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% from 'macros.html' import render_field  %}
+
+{% block content %}
+	
+	<h1>Your Messages</h1>
+	
+		<h3>New message from {{ messages.sender }}</h3>
+		<h5>{{ messages.timestamp }}</h5>
+		<p>
+			{{ messages.content }}
+		</p>
+		
+	
+
+{% endblock %}
