@@ -70,6 +70,7 @@ def register_account():
 	# for get method --> retrieve form
 	return render_template('register.html', form = form)
 
+
 ''' logging in '''
 @app.route('/login', methods = ('GET', 'POST'))
 def login():
@@ -178,28 +179,45 @@ def notifications():
 
 ''' edit and update a pet '''
 @login_required
-@app.route('/update_pet/<id>', methods = ('GET', 'PUT'))
-def update_pet():
-	form = forms.PetForm()
+@app.route('/pets/<id>/edit', methods = ('GET', 'POST'))
+def update_pet(id):
+	pet = models.Pet.select().where(models.Pet.id == id).get()
+	print('boutta print this pet')
+	print(pet)
+	form = forms.PetForm(
+		name = pet.name,
+		pet_type = pet.pet_type,
+		age = pet.age,
+		special_requirements = pet.special_requirements
+	)
+	print(form.data)
 	if form.validate_on_submit():
-		models.Pet.update(
+		p = models.Pet.update(
 			name = form.name.data,
 			age = form.age.data,
 			pet_type = form.pet_type.data,
 			special_requirements = form.special_requirements.data
-		)	
+		).where(models.Pet.id == id)
+		p.execute()
+		print('save me')
+		print(p)
 		return redirect(url_for('dashboard'))
-	return render_template('edit-pet.html', form = form)
+	return render_template('edit-pet.html', form=form, pet=pet)
 
 ''' delete a pet '''
 @login_required
-@app.route('/delete_pet/<id>', methods = ('GET', 'DELETE'))
-def delete_pet(name):
-	form = forms.DeletePetForm()
-	if form.validate_on_submit():
-		models.Pet.name.delete()
-		return redirect(url_for('dashboard'))
-	return render_template('delete-pet.html', form = form)
+@app.route('/pets/<id>/delete', methods = ('GET', 'DELETE'))
+def delete_pet(id):
+	print('yo')
+	posts = models.Post.delete().where(models.Post.pet == id)
+	posts.execute()
+	pet = models.Pet.delete().where(models.Pet.id == id)
+	pet.execute()
+	return redirect(url_for('dashboard'))
+	# if form.validate_on_submit():
+	# 	models.Pet.name.delete()
+	# 	return redirect(url_for('dashboard'))
+	# return render_template('delete-pet.html', form = form)
 
 ''' user profile '''
 @app.route('/users')
@@ -216,6 +234,23 @@ def get_profile(username = None):
 	posts = models.Post.select().where(models.Post.user == user)
 	return render_template('user_profile.html', user = user, session_user = session_user, 
 		pets = pets, posts = posts)
+
+# @app.route('/users/<id>')
+# def get_profile(id):
+# 	if id != current_user.id:
+# 		user = models.User.select().where(models.User.id == id).get()
+# 	else:
+# 		user = current_user
+	
+# 	# user = models.User.select().where(models.User.id == current_user.id).get()
+# 	pets = models.Pet.select().where(models.Pet.owner == user)
+# 	posts = models.Post.select().where(models.Post.user == user)
+# 	return render_template(
+# 		'user_profile.html',
+# 		user = user,
+# 		pets = pets,
+# 		posts = posts
+# 		)
 
 ''' send a message '''
 @login_required
