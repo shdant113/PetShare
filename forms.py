@@ -138,3 +138,17 @@ class PetForm(Form):
     special_requirements = StringField(
         "Are there any special requirements a sitter needs to know about in order to take care of your pet?"
     )
+
+''' new message '''
+
+class MessageForm(Form):
+    message = TextAreaField(
+        "Message",
+        validators = [
+            DataRequired(),
+            Length(min = 0, max = 500)
+        ]
+    )
+    submit = SubmitField(
+        "Submit"
+    )

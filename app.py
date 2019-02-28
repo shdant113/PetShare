@@ -164,13 +164,15 @@ def notifications():
 @login_required
 @app.route('/send_notification', methods = ('GET', 'PUT'))
 def send_notification():
-	if method == 'PUT':
-		user = models.User.select().where(models.User.id == current_user.id).get()
-		query = user.update(
-			notifications = ['this is a notification']
-		)
-		query.execute()
-		user.save()
+	## user makes a post
+		## post is assigned to user --> user.posts
+	## another user clicks on button on the post
+		## user is assigned as sitter
+		## post has sitter = someone
+		## original user needs to see this
+		## original user fills out form that updates post to job_accepted = True
+	
+	
 		return redirect(url_for('dashboard'))
 	return render_template('confirm_request.html', form = form)
 
