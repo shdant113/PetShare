@@ -202,8 +202,10 @@ def delete_pet(name):
 	return render_template('delete-pet.html', form = form)
 
 ''' user profile '''
+@app.route('/users')
 @app.route('/users/<username>')
 def get_profile(username = None):
+
 	if username and username != current_user.username:
 		session_user = current_user.username
 		user = models.User.select().where(models.User.username ** username).get()

@@ -107,7 +107,7 @@ class Message(Model):
 
 def init_database():
 	DATABASE.connect()
-	DATABASE.create_tables([User, Pet, Post], safe = True)
+	DATABASE.create_tables([User, Pet, Post, Message], safe = True)
 	DATABASE.close()
 
 

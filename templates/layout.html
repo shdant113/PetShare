@@ -11,7 +11,7 @@
 
     <div class="row">
       <div class="col">
-        <h3>{% if current_user.is_authenticated %}<a href="/users/{{current_user.id}}">{{current_user.username}}</a>{% endif %}</h3>
+        <h3>{% if current_user.is_authenticated %}<a href="/users/{{current_user.username}}">{{current_user.username}}</a>{% endif %}</h3>
       </div>
       <div class="col">
           {% if current_user.is_authenticated %}
