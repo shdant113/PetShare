@@ -1,7 +1,6 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-
     <h1>{{ user.display_name }}'s profile</h1>
     <div>
    		{{ user.username }}
@@ -11,5 +10,4 @@
   		{{ user.bio }}
     </div>
     {{ super() }}
-   
 {% endblock %}

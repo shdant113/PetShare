@@ -174,6 +174,7 @@ def get_profile(id):
 	print([pet.name for pet in pets])
 	return render_template('user_profile.html', user = user, pets = pets)
 
+
 ''' accept a job -- click on post '''
 # @login_required
 # @app.route('/accept_job', methods = ('GET', 'POST'))
