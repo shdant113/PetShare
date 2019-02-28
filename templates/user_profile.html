@@ -3,6 +3,10 @@
 {% block content %}
 
     <h1>YOO</h1>
-
-    {{user.username}}
+    <div>
+   		{{ user.username }}
+  		{{ user.pets.count() }}
+    </div>
+    {{ super() }}
+   
 {% endblock %}
