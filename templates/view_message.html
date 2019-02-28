@@ -5,11 +5,17 @@
 	
 	<h1>Your Messages</h1>
 	
-		<h3>New message from {{ messages.sender }}</h3>
-		<h5>{{ messages.timestamp }}</h5>
+	<div class="card" style="width: 22rem;">
+		<h3>New message from {{ messages.sender.username }}</h3>
+		<h5>
+			<time data-time="{{ messages.timestamp }}" class="distime" datetime="{{ messages.timestamp.strftime('%Y-%m-%d %H:%M') }}">
+				{{ messages.timestamp.strftime('%Y-%m-%d %H:%M') }}
+			</time>
+		</h5>
 		<p>
 			{{ messages.content }}
 		</p>
+	</div>
 		
 	
 
