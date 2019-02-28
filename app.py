@@ -162,15 +162,16 @@ def notifications():
 
 ''' send notification '''
 @login_required
-@app.route('/send_notification', methods = ('GET', 'POST'))
+@app.route('/send_notification', methods = ('GET', 'PUT'))
 def send_notification():
-	user = models.User.select().where(models.User.id == current_user.id).get()
-	query = user.append(
-		notifications = 'this is a notification'
-	)
-	query.execute()
-	user.save()
-	return redirect(url_for('dashboard'))
+	if method == 'PUT':
+		user = models.User.select().where(models.User.id == current_user.id).get()
+		query = user.update(
+			notifications = ['this is a notification']
+		)
+		query.execute()
+		user.save()
+		return redirect(url_for('dashboard'))
 	return render_template('confirm_request.html', form = form)
 
 ''' edit and update a pet '''
