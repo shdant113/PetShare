@@ -37,6 +37,11 @@ def after_request(response):
 
 ''' ROUTES '''
 
+''' 404 '''
+@app.errorhandler(404)
+def pet_404(e):
+	return render_template('404.html'), 404
+
 ''' index/dashboard '''
 @app.route('/')
 def dashboard():
@@ -163,16 +168,6 @@ def get_user(id):
 ''' initialize database '''
 if __name__ == '__main__':
     models.init_database()
-    try: 
-        models.User.create_a_user(
-            username = 'admin',
-            email = 'admin@admin.com',
-            password = 'admin',
-            location = 'hidden',
-            display_name = 'administrator'
-        )
-    except ValueError: 
-        pass
 
 app.run(debug = config.DEBUG, port = config.PORT)
 
