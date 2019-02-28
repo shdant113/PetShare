@@ -19,6 +19,8 @@ class User(UserMixin, Model):
 	bio = TextField(null=True)
 	location = CharField(null=True)
 	notifications = CharField(null = True)
+	sent_messages = ForeignKeyField(Message, backref='author')
+	received_messages = ForeignKeyField(Message, backref='recipient')
 
 	class Meta:
 		database = DATABASE
@@ -42,6 +44,8 @@ class User(UserMixin, Model):
 			return user
 		except IntegrityError:
 			raise ValueError('user already exists')
+
+
 
 	@classmethod
 	def get_user(self, id):
@@ -87,6 +91,21 @@ class Post(Model):
 	class Meta:
 		database = DATABASE
 		order_by = ('-timestamp',)
+
+
+class Message(Model):
+	timestamp = DateTimeField(default = datetime.datetime.now)
+	sender = ForeignKeyField(User, backref = 'messages')
+	recipient = ForeignKeyField(User, backref = 'messages')
+	content = CharField()
+
+	class Meta:
+		database = DATABASE
+
+	def __str__(self):
+		return '<Message {}>'.format(self.content)
+
+
 
 def init_database():
 	DATABASE.connect()
