@@ -7,9 +7,6 @@ import forms
 import models
 import config
 
-from resources.pets import pets_api
-from resources.users import users_api
-
 ''' initialize program '''
 app = Flask(__name__)
 app.secret_key = config.SECRET_KEY
@@ -24,10 +21,6 @@ def load_user(userid):
 		return models.User.get(models.User.id == userid)
 	except models.DoesNotExist:
 		return None
-
-''' use api '''
-app.register_blueprint(pets_api, url_prefix='/api/v1')
-app.register_blueprint(users_api, url_prefix='/api/v1')
 
 ''' pool db connections '''
 @app.before_request
@@ -164,16 +157,16 @@ def get_user(id):
 ''' initialize database '''
 if __name__ == '__main__':
     models.init_database()
-    # try: 
-    #     models.User.create_a_user(
-    #         username = 'admin',
-    #         email = 'admin@admin.com',
-    #         password = 'admin',
-    #         location = 'hidden',
-    #         display_name = 'administrator'
-    #     )
-    # except ValueError: 
-    #     pass
+    try: 
+        models.User.create_a_user(
+            username = 'admin',
+            email = 'admin@admin.com',
+            password = 'admin',
+            location = 'hidden',
+            display_name = 'administrator'
+        )
+    except ValueError: 
+        pass
 
 app.run(debug = config.DEBUG, port = config.PORT)
 
