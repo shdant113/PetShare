@@ -150,11 +150,17 @@ def delete_pet(name):
 '''user profile'''
 @app.route('/users/<id>')
 def get_user(id):
-	usr = models.User.select().where(models.User.id == id)
-	if usr:
-		return render_template('user_profile.html', user = usr.get())
-	else:
+	try:
+		usr = models.User.get(models.User.id == id)
+		return render_template('user_profile.html', user = usr)
+	except:
 		return redirect(url_for('dashboard'))
+
+	# usr = models.User.select().where(models.User.id == id)
+	# if usr:
+	# 	return render_template('user_profile.html', user = usr.get())
+	# else:
+	# 	return redirect(url_for('dashboard'))
 
 ''' accept a job -- click on post '''
 # @login_required
