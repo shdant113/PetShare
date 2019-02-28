@@ -100,11 +100,20 @@ def logout():
 @app.route('/new_post', methods = ('GET', 'POST'))
 def new_post():
 	form = forms.PostForm()
+	user = models.User.select().where(models.User.id == current_user.id).get()
+	pets = models.Pet.select().where(models.Pet.owner == user)
+
+	petList = []
+	for pet in pets:
+		petList.append((pet.id, pet.name))
+	
+	form.pet.choices = petList
+
 	if form.validate_on_submit():
 		models.Post.create(
 			user = g.user._get_current_object(),
 			content = form.content.data.strip(),
-			pet = models.Pet.select().where(form.pet.data == models.Pet.name).get(),
+			pet = form.pet.data,
 			requested_time = form.requested_time.data
 		)
 		return redirect(url_for('dashboard'))
