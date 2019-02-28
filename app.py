@@ -34,8 +34,14 @@ def after_request(response):
 	g.db.close()
 	return response
 
-
+##############
 ''' ROUTES '''
+##############
+
+''' 404 '''
+@app.errorhandler(404)
+def pet_404(e):
+	return render_template('404.html'), 404
 
 ''' index/dashboard '''
 @app.route('/')
@@ -55,6 +61,8 @@ def register_account():
 			password = form.password.data,
 			email = form.email.data
 		)
+		user = models.User.get(models.User.username == form.username.data)
+		login_user(user)
 		return redirect(url_for('dashboard'))
 	# for get method --> retrieve form
 	return render_template('register.html', form = form)
@@ -110,14 +118,30 @@ def new_pet():
 			age = form.age.data,
 			pet_type = form.pet_type.data,
 			special_requirements = form.special_requirements.data,
-			owner = g.user._get_current_object().id
+			owner = models.User.select().where(models.User.id == current_user.id).get()
 		)
 		return redirect(url_for('dashboard'))
 	return render_template('add-pet.html', form = form)
 
+''' show index of pets '''
+@login_required
+@app.route('/show')
+def show():
+	## eventually this should display only the current_user's pets
+	# if username and username != current_user.username:
+	# 	user = (models.User.select()
+	# 		.where(models.User.username ** username).get())
+	# 	pets = user.pets
+	# else: 
+	user = models.User.select().where(models.User.id == current_user.id).get()
+	pets = models.Pet.select()
+		#.where(models.Pet.owner == user).get()
+	return render_template('user_profile.html', user = user, pets = pets)
+
+
 ''' edit and update a pet '''
 @login_required
-@app.route('/update_pet/<name>', methods = ('GET', 'PUT'))
+@app.route('/update_pet/<id>', methods = ('GET', 'PUT'))
 def update_pet():
 	form = forms.PetForm()
 	if form.validate_on_submit():
@@ -132,7 +156,7 @@ def update_pet():
 
 ''' delete a pet '''
 @login_required
-@app.route('/delete_pet/<name>', methods = ('GET', 'DELETE'))
+@app.route('/delete_pet/<id>', methods = ('GET', 'DELETE'))
 def delete_pet(name):
 	form = forms.DeletePetForm()
 	if form.validate_on_submit():
@@ -140,10 +164,11 @@ def delete_pet(name):
 		return redirect(url_for('dashboard'))
 	return render_template('delete-pet.html', form = form)
 
-'''user profile'''
+''' user profile '''
 @app.route('/users/<id>')
 def get_user(id):
 	try:
+<<<<<<< HEAD
 		usr = models.User.get(models.User.id == id)
 		pets = models.Pet.select().where(models.Pet.owner_id == usr.id)
 		petList = []
@@ -151,14 +176,12 @@ def get_user(id):
 			petList.append(pet.get())
 		print(petList)
 		return render_template('user_profile.html', user = usr, pets = petList)
+=======
+		user = models.User.get(models.User.id == id)
+		return render_template('user_profile.html', user = user)
+>>>>>>> 4f1b60cf9c27165095cf5325d9e2ae1f389cf1e8
 	except:
 		return redirect(url_for('dashboard'))
-
-	# usr = models.User.select().where(models.User.id == id)
-	# if usr:
-	# 	return render_template('user_profile.html', user = usr.get())
-	# else:
-	# 	return redirect(url_for('dashboard'))
 
 ''' accept a job -- click on post '''
 # @login_required
@@ -168,16 +191,6 @@ def get_user(id):
 ''' initialize database '''
 if __name__ == '__main__':
     models.init_database()
-    try: 
-        models.User.create_a_user(
-            username = 'admin',
-            email = 'admin@admin.com',
-            password = 'admin',
-            location = 'hidden',
-            display_name = 'administrator'
-        )
-    except ValueError: 
-        pass
 
 app.run(debug = config.DEBUG, port = config.PORT)
 

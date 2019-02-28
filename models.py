@@ -44,29 +44,24 @@ class User(UserMixin, Model):
 		except IntegrityError:
 			raise ValueError('user already exists')
 
+	@classmethod
+	def show_pets(self):
+		return Pet.select().where(
+			(Pet.owner == self)
+		)
+
 
 class Pet(Model):
 	name = CharField()
 	pet_type = CharField() # enum/CREATE TYPE
 	age = IntegerField()
 	created_on = DateTimeField(default = datetime.datetime.now)
-	owner = ForeignKeyField(User, related_name = 'owner_pet')
+	owner = ForeignKeyField(User, backref = 'pets', related_name = 'owner_pet')
 	special_requirements = TextField()
 
 	class Meta:
 		database = DATABASE
 
-	# @classmethod
-	# def create_a_pet(cls, name, pet_type, age, special_requirements):
-	# 	try:
-	# 		cls.create(
-	# 			name = name,
-	# 			pet_type = pet_type,
-	# 			age = age,
-	# 			special_requirements = special_requirements
-	# 		)
-	# 	except IntegrityError:
-	# 		raise ValueError('Invalid inputs.')
 
 
 class Post(Model):
