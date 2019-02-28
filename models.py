@@ -19,8 +19,6 @@ class User(UserMixin, Model):
 	bio = TextField(null=True)
 	location = CharField(null=True)
 	notifications = CharField(null = True)
-	sent_messages = ForeignKeyField(Message, backref='author')
-	received_messages = ForeignKeyField(Message, backref='recipient')
 
 	class Meta:
 		database = DATABASE
