@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm as Form
 from models import *
-from wtforms import StringField, PasswordField, TextAreaField, DateTimeField, IntegerField, DateField
+from wtforms import SelectField, StringField, PasswordField, TextAreaField, DateTimeField, IntegerField, DateField
 from wtforms.validators import (DataRequired, Regexp, ValidationError, Email,
                                 Length, EqualTo)
 
@@ -92,12 +92,13 @@ class LoginForm(Form):
 
 ''' posting '''
 class PostForm(Form):
-    pet = StringField(
-        "Pick your pet!",
-        validators = [
-            DataRequired(),
-            # pet_matches
-        ]
+    pet = SelectField(
+        coerce=int,
+        label='pets'
+        # validators = [
+        #     DataRequired(),
+        #     # pet_matches
+        # ]
     )
     content = TextAreaField(
         "List all the details!", 
@@ -105,8 +106,9 @@ class PostForm(Form):
             DataRequired()
         ]
     )
-    requested_time = StringField(
-        "When do you need a pet sitter?",
+    requested_time = DateTimeField(
+        "When do you need a pet sitter?", format='%m/%d/%y',
+        default=datetime.datetime.now,
         validators = [
             DataRequired()
         ]
