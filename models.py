@@ -45,6 +45,12 @@ class User(UserMixin, Model):
 			raise ValueError('user already exists')
 
 	@classmethod
+	def get_user(self, id):
+		return User.select().where(
+			(User.id == self.id)
+		)
+
+	@classmethod
 	def show_pets(self):
 		return Pet.select().where(
 			(Pet.owner == self)
@@ -56,7 +62,7 @@ class Pet(Model):
 	pet_type = CharField() # enum/CREATE TYPE
 	age = IntegerField()
 	created_on = DateTimeField(default = datetime.datetime.now)
-	owner = ForeignKeyField(User, backref = 'pets', related_name = 'owner_pet')
+	owner = ForeignKeyField(User, related_name = 'owner_pet')
 	special_requirements = TextField()
 
 	class Meta:

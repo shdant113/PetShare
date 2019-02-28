@@ -2,10 +2,13 @@
 
 {% block content %}
 
-    <h1>YOO</h1>
+    <h1>{{ user.display_name }}'s profile</h1>
     <div>
    		{{ user.username }}
-  		{{ pets.name }}
+   		{% for pet in pets %}
+   			{{ pet.name }}
+   		{% endfor %}
+  		{{ user.bio }}
     </div>
     {{ super() }}
    

@@ -127,7 +127,9 @@ def new_pet():
 @login_required
 @app.route('/show')
 def show():
-	## eventually this should display only the current_user's pets
+
+	## THIS ROUTE IS FOR TESTING ONLY IT SHOULD NOT BE ON THE FINAL PRODUCT
+	
 	# if username and username != current_user.username:
 	# 	user = (models.User.select()
 	# 		.where(models.User.username ** username).get())
@@ -165,13 +167,12 @@ def delete_pet(name):
 	return render_template('delete-pet.html', form = form)
 
 ''' user profile '''
-@app.route('/users/<id>')
-def get_user(id):
-	try:
-		user = models.User.get(models.User.id == id)
-		return render_template('user_profile.html', user = user)
-	except:
-		return redirect(url_for('dashboard'))
+@app.route('/users/<int:id>')
+def get_profile(id):
+	user = models.User.select().where(models.User.id == current_user.id).get()
+	pets = models.Pet.select().where(models.Pet.owner == user)
+	print([pet.name for pet in pets])
+	return render_template('user_profile.html', user = user, pets = pets)
 
 ''' accept a job -- click on post '''
 # @login_required
