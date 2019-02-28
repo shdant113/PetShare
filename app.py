@@ -70,6 +70,7 @@ def register_account():
 	# for get method --> retrieve form
 	return render_template('register.html', form = form)
 
+
 ''' logging in '''
 @app.route('/login', methods = ('GET', 'POST'))
 def login():
@@ -155,18 +156,30 @@ def show():
 
 ''' edit and update a pet '''
 @login_required
-@app.route('/update_pet/<id>', methods = ('GET', 'PUT'))
-def update_pet():
-	form = forms.PetForm()
+@app.route('/pets/<id>/edit', methods = ('GET', 'POST'))
+def update_pet(id):
+	pet = models.Pet.select().where(models.Pet.id == id).get()
+	print('boutta print this pet')
+	print(pet)
+	form = forms.PetForm(
+		name = pet.name,
+		pet_type = pet.pet_type,
+		age = pet.age,
+		special_requirements = pet.special_requirements
+	)
+	print(form.data)
 	if form.validate_on_submit():
-		models.Pet.update(
+		p = models.Pet.update(
 			name = form.name.data,
 			age = form.age.data,
 			pet_type = form.pet_type.data,
 			special_requirements = form.special_requirements.data
-		)	
+		).where(models.Pet.id == id)
+		p.execute()
+		print('save me')
+		print(p)
 		return redirect(url_for('dashboard'))
-	return render_template('edit-pet.html', form = form)
+	return render_template('edit-pet.html', form=form, pet=pet)
 
 ''' delete a pet '''
 @login_required

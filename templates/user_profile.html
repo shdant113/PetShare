@@ -4,8 +4,8 @@
     <h1>{{ user.display_name }}'s profile</h1>
     <div>
    		{{ user.username }} <br>
-   		{% for pet in pets %}
-   			{{ pet.name }} <br>
+		   {% for pet in pets %}
+			   <a href="{{url_for('update_pet', id = pet.id)}}">{{ pet.name }}</a>
    		{% endfor %} 
   		{{ user.bio }} <br>
     </div>
@@ -23,6 +23,7 @@
 			</h5>
 			<div class = "card-body">
 				<p class = "card-text">
+					Request for: {{post.pet.name}}<br>
 					{{ post.content }}
 				</p>
 			</div>
