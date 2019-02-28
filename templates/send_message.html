@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+	<form action="" method="POST">
+		{{ form.hidden_tag() }}
+		<h1>Send a message</h1>
+		{% for field in form %}
+	        {{render_field(field)}}
+	    {% endfor %}
+	</form>
+
+{% endblock %}
