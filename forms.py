@@ -105,7 +105,7 @@ class PostForm(Form):
             DataRequired()
         ]
     )
-    requested_time = DateField(
+    requested_time = StringField(
         "When do you need a pet sitter?",
         validators = [
             DataRequired()

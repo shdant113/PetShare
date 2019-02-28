@@ -2,11 +2,28 @@
 
 {% block content %}
 
-    <a href="{{url_for('new_post')}}">Add a post</a>
-    <br>
-    <a href="{{url_for('new_pet')}}" title="new_pet">New Pet</a>
-    <br>
-    <a href="{{url_for('show')}}">Show Pet</a>
+	<a href = "{{url_for('new_post')}}">Add a post</a>
+	<br>
+	<a href = "{{url_for('new_pet')}}" title = "new_pet">New Pet</a>
+	<br>
+	<a href = "{{url_for('show')}}">Show Pet</a>
+	
+	{% for post in posts %}
 
+		<div class = "card" style = "width: 22rem;">
+			<time data-time = "{{ post.timestamp }}" class = "distime" datetime = "{{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}">
+				{{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}
+			</time>
+			<a class = "btn primary" href = "{{ url_for('get_profile', id = post.user) }}">
+				{{ post.user.username }}
+			</a>
+			<div class = "card-body">
+				<p class = "card-text">
+					{{ post.content }}
+				</p>
+			</div>
+		</div>
+
+	{% endfor %}
 
 {% endblock %}

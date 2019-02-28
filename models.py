@@ -56,6 +56,12 @@ class User(UserMixin, Model):
 			(Pet.owner == self)
 		)
 
+	@classmethod
+	def get_posts(self):
+		return Post.select().where(
+			(Post.user == self)
+		)
+
 
 class Pet(Model):
 	name = CharField()
@@ -74,7 +80,7 @@ class Post(Model):
 	timestamp = DateTimeField(default = datetime.datetime.now)
 	user = ForeignKeyField(User, backref = 'posts')
 	pet = ForeignKeyField(Pet, backref = 'posts')
-	requested_time = DateField()
+	requested_time = CharField()
 	sitter = ForeignKeyField(User, null = True, backref = 'posts')
 	content = TextField()
 	job_accepted = BooleanField(default = False)

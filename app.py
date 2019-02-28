@@ -44,9 +44,12 @@ def pet_404(e):
 	return render_template('404.html'), 404
 
 ''' index/dashboard '''
+@login_required
 @app.route('/')
 def dashboard():
-	return render_template('dashboard.html')
+	posts = models.Post.select()
+	user = current_user
+	return render_template('dashboard.html', posts = posts, user = user)
 
 ''' registration '''
 @app.route('/register', methods = ('GET', 'POST'))
@@ -85,14 +88,14 @@ def login():
 	return render_template('login.html', form = form)
 
 ''' logging out '''
-@app.route('/logout')
 @login_required
+@app.route('/logout')
 def logout():
 	# destroy our session
 	logout_user()
 	return redirect(url_for('dashboard'))
 
-''' posting '''
+''' adding a new post '''
 @login_required
 @app.route('/new_post', methods = ('GET', 'POST'))
 def new_post():
@@ -101,8 +104,8 @@ def new_post():
 		models.Post.create(
 			user = g.user._get_current_object(),
 			content = form.content.data.strip(),
-			pet = form.pet.data,
-			requested_time = form.requested_time.data()
+			pet = models.Pet.select().where(form.pet.data == models.Pet.name).get(),
+			requested_time = form.requested_time.data
 		)
 		return redirect(url_for('dashboard'))
 	return render_template('post.html', form = form)
@@ -167,12 +170,13 @@ def delete_pet(name):
 	return render_template('delete-pet.html', form = form)
 
 ''' user profile '''
-@app.route('/users/<int:id>')
+@app.route('/users/<id>')
 def get_profile(id):
 	user = models.User.select().where(models.User.id == current_user.id).get()
 	pets = models.Pet.select().where(models.Pet.owner == user)
-	print([pet.name for pet in pets])
-	return render_template('user_profile.html', user = user, pets = pets)
+	posts = models.Post.select().where(models.Post.user == user)
+	return render_template('user_profile.html', user = user, pets = pets,
+	posts = posts)
 
 
 ''' accept a job -- click on post '''
