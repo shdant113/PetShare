@@ -156,9 +156,22 @@ def show():
 @login_required
 @app.route('/notifications')
 def notifications():
-	notifications = current_user.notifications.get()
+	notifications = current_user.notifications
 	user = current_user
-	return render_template('notification.html', user = user, notifications = notifications)
+	return render_template('notifications.html', user = user, notifications = notifications)
+
+''' send notification '''
+@login_required
+@app.route('/send_notification', methods = ('GET', 'POST'))
+def send_notification():
+	user = models.User.select().where(models.User.id == current_user.id).get()
+	query = user.append(
+		notifications = 'this is a notification'
+	)
+	query.execute()
+	user.save()
+	return redirect(url_for('dashboard'))
+	return render_template('confirm_request.html', form = form)
 
 ''' edit and update a pet '''
 @login_required

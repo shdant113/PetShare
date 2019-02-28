@@ -1,7 +1,10 @@
 {% extends "layout.html" %}	
 
 {% block content %}
-	
-	<button><a href="{{url_for('send_notification')}}">Send Notification</a></button>
+
+	<form action="" method="POST">
+		This will send a notification
+        <button>Send Notification</button>
+    </form>
 
 {% endblock %}
