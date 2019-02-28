@@ -172,7 +172,7 @@ def send_notification():
 		## original user needs to see this
 		## original user fills out form that updates post to job_accepted = True
 	
-	
+
 		return redirect(url_for('dashboard'))
 	return render_template('confirm_request.html', form = form)
 
@@ -210,6 +210,21 @@ def get_profile(id):
 	return render_template('user_profile.html', user = user, pets = pets,
 	posts = posts)
 
+''' send a message '''
+@login_required
+@app.route('/send/<recipient>', methods = ('GET', 'POST'))
+def send_message(recipient):
+	user = models.User.select().where(models.User.username == recipient).get()
+	current = models.User.select().where(models.User.username == current_user.username).get()
+	form = forms.MessageForm()
+	if form.validate_on_submit():
+		models.Message.create(
+			content = form.content.data,
+			sender = current,
+			recipient = user
+		)
+		return redirect(url_for('dashboard'))
+	return render_template('send_message.html', form = form, recipient = recipient, sender = sender) 
 
 ''' accept a job -- click on post '''
 # @login_required

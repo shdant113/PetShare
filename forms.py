@@ -142,8 +142,8 @@ class PetForm(Form):
 ''' new message '''
 
 class MessageForm(Form):
-    message = TextAreaField(
-        "Message",
+    content = TextAreaField(
+        "Content",
         validators = [
             DataRequired(),
             Length(min = 0, max = 500)
