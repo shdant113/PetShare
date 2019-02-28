@@ -12,18 +12,22 @@
 
     {% for post in posts %}
 		
+		
 		<div class = "card" style = "width: 22rem;">
-			<time data-time = "{{ post.timestamp }}" class = "distime" datetime = "{{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}">
-				{{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}
-			</time>
-			<h5 class = "card-title">
-				<a class = "btn primary" href = "{{ url_for('get_profile', id = post.user) }}">
+			<div>
+				<time data-time = "{{ post.timestamp }}" class = "distime" datetime = "{{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}">
+					{{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}
+				</time>
+				<a href = "{{ url_for('get_profile', id = post.user) }}">
 					{{ post.user.username }}
 				</a>
-			</h5>
+			</div>
 			<div class = "card-body">
 				<p class = "card-text">
-					{{ post.content }}
+					I am looking for: <br>
+					{{ post.content }} <br><br>
+					I need a sitter on: <br>
+					{{ post.requested_time }}
 				</p>
 			</div>
 		</div>

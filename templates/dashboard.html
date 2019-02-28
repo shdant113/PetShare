@@ -2,24 +2,31 @@
 
 {% block content %}
 
-	<a href = "{{url_for('new_post')}}">Add a post</a>
+	<a href="{{url_for('new_post')}}">Add a post</a>
 	<br>
-	<a href = "{{url_for('new_pet')}}" title = "new_pet">New Pet</a>
+	<a href="{{url_for('new_pet')}}" title="new_pet">New Pet</a>
 	<br>
-	<a href = "{{url_for('show')}}">Show Pet</a>
+	<a href="{{url_for('show')}}">Show Pet</a>
+	<a href="{{url_for('notifications')}}">Notifications</a>
+	<a href="{{url_for('make_notification')}}">Make Notification</a>
 	
 	{% for post in posts %}
 
 		<div class = "card" style = "width: 22rem;">
-			<time data-time = "{{ post.timestamp }}" class = "distime" datetime = "{{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}">
-				{{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}
-			</time>
-			<a class = "btn primary" href = "{{ url_for('get_profile', id = post.user) }}">
-				{{ post.user.username }}
-			</a>
+			<div>
+				<time data-time = "{{ post.timestamp }}" class = "distime" datetime = "{{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}">
+					{{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}
+				</time>
+				<a href = "{{ url_for('get_profile', id = post.user) }}">
+					{{ post.user.username }}
+				</a>
+			</div>
 			<div class = "card-body">
 				<p class = "card-text">
-					{{ post.content }}
+					I am looking for: <br>
+					{{ post.content }} <br><br>
+					I need a sitter on: <br>
+					{{ post.requested_time }}
 				</p>
 			</div>
 		</div>

@@ -10,7 +10,7 @@ DATABASE = PostgresqlDatabase(
 )
 
 class User(UserMixin, Model):
-	username = CharField(unique = True)
+	username = CharField(unique=True)
 	display_name = CharField(default = username)
 	email = CharField(unique = True)
 	password = CharField(max_length = 100)
@@ -18,7 +18,6 @@ class User(UserMixin, Model):
 	admin_status = BooleanField(default = False)
 	bio = TextField(null=True)
 	location = CharField(null=True)
-	# schedule = ForeignKeyField(Post, related_name = 'schedule_user')
 	notifications = CharField(null = True)
 
 	class Meta:

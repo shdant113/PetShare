@@ -143,6 +143,13 @@ def show():
 		#.where(models.Pet.owner == user).get()
 	return render_template('user_profile.html', user = user, pets = pets)
 
+''' show all notifications '''
+@login_required
+@app.route('/notifications')
+def notifications():
+	notifications = current_user.notifications.get()
+	user = current_user
+	return render_template('notification.html', user = user, notifications = notifications)
 
 ''' edit and update a pet '''
 @login_required
