@@ -168,7 +168,6 @@ def delete_pet(name):
 @app.route('/users/<id>')
 def get_user(id):
 	try:
-<<<<<<< HEAD
 		usr = models.User.get(models.User.id == id)
 		pets = models.Pet.select().where(models.Pet.owner_id == usr.id)
 		petList = []
@@ -176,10 +175,6 @@ def get_user(id):
 			petList.append(pet.get())
 		print(petList)
 		return render_template('user_profile.html', user = usr, pets = petList)
-=======
-		user = models.User.get(models.User.id == id)
-		return render_template('user_profile.html', user = user)
->>>>>>> 4f1b60cf9c27165095cf5325d9e2ae1f389cf1e8
 	except:
 		return redirect(url_for('dashboard'))
 
