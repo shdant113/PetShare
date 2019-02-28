@@ -133,7 +133,11 @@ def show():
 	# 		.where(models.User.username ** username).get())
 	# 	pets = user.pets
 	# else: 
-	print('pets')
+	user = models.User.select().where(models.User.id == current_user.id).get()
+	pets = models.Pet.select()
+		#.where(models.Pet.owner == user).get()
+	return render_template('user_profile.html', user = user, pets = pets)
+
 
 ''' edit and update a pet '''
 @login_required
