@@ -183,22 +183,36 @@ def update_pet(id):
 
 ''' delete a pet '''
 @login_required
-@app.route('/delete_pet/<id>', methods = ('GET', 'DELETE'))
-def delete_pet(name):
-	form = forms.DeletePetForm()
-	if form.validate_on_submit():
-		models.Pet.name.delete()
-		return redirect(url_for('dashboard'))
-	return render_template('delete-pet.html', form = form)
+@app.route('/pets/<id>/delete', methods = ('GET', 'DELETE'))
+def delete_pet(id):
+	print('yo')
+	posts = models.Post.delete().where(models.Post.pet == id)
+	posts.execute()
+	pet = models.Pet.delete().where(models.Pet.id == id)
+	pet.execute()
+	return redirect(url_for('dashboard'))
+	# if form.validate_on_submit():
+	# 	models.Pet.name.delete()
+	# 	return redirect(url_for('dashboard'))
+	# return render_template('delete-pet.html', form = form)
 
 ''' user profile '''
 @app.route('/users/<id>')
 def get_profile(id):
-	user = models.User.select().where(models.User.id == current_user.id).get()
+	if id != current_user.id:
+		user = models.User.select().where(models.User.id == id).get()
+	else:
+		user = current_user
+	
+	# user = models.User.select().where(models.User.id == current_user.id).get()
 	pets = models.Pet.select().where(models.Pet.owner == user)
 	posts = models.Post.select().where(models.Post.user == user)
-	return render_template('user_profile.html', user = user, pets = pets,
-	posts = posts)
+	return render_template(
+		'user_profile.html',
+		user = user,
+		pets = pets,
+		posts = posts
+		)
 
 
 ''' accept a job -- click on post '''
