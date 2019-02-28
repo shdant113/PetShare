@@ -1,11 +1,18 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <h1>{{ user.display_name }}'s profile</h1>
+	<h1>{{ user.display_name }}'s profile</h1>
+	<p>current user id: {{current_user.id}}</p>
+	<p>this user id: {{user.id}}</p>
     <div>
    		{{ user.username }} <br>
-   		{% for pet in pets %}
-   			{{ pet.name }} <br>
+		   {% for pet in pets %}
+		   	{% if current_user.id == user.id %}
+			   <a href="{{url_for('update_pet', id=pet.id)}}">{{ pet.name }}</a>
+			   <a href="{{url_for('delete_pet', id=pet.id)}}">delete this pet</a>
+			{% else %}
+				<p>{{pet.name}}</p>
+			{% endif %}
    		{% endfor %} 
   		{{ user.bio }} <br>
     </div>
@@ -24,10 +31,15 @@
 			</div>
 			<div class = "card-body">
 				<p class = "card-text">
+<<<<<<< HEAD
 					I am looking for: <br>
 					{{ post.content }} <br><br>
 					I need a sitter on: <br>
 					{{ post.requested_time }}
+=======
+					Request for: {{post.pet.name}}<br>
+					{{ post.content }}
+>>>>>>> 5d66d25190af48616f0d6546fce9b9d14524c1c5
 				</p>
 			</div>
 		</div>
