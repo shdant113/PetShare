@@ -161,9 +161,9 @@ def notifications():
 	return render_template('notifications.html', user = user, notifications = notifications)
 
 ''' send notification '''
-@login_required
-@app.route('/send_notification', methods = ('GET', 'PUT'))
-def send_notification():
+# @login_required
+# @app.route('/send_notification', methods = ('GET', 'PUT'))
+# def send_notification():
 	## user makes a post
 		## post is assigned to user --> user.posts
 	## another user clicks on button on the post
@@ -173,8 +173,8 @@ def send_notification():
 		## original user fills out form that updates post to job_accepted = True
 	
 
-		return redirect(url_for('dashboard'))
-	return render_template('confirm_request.html', form = form)
+	# 	return redirect(url_for('dashboard'))
+	# return render_template('confirm_request.html', form = form)
 
 ''' edit and update a pet '''
 @login_required
@@ -202,13 +202,18 @@ def delete_pet(name):
 	return render_template('delete-pet.html', form = form)
 
 ''' user profile '''
-@app.route('/users/<id>')
-def get_profile(id):
-	user = models.User.select().where(models.User.id == current_user.id).get()
+@app.route('/users/<username>')
+def get_profile(username = None):
+	if username and username != current_user.username:
+		session_user = current_user.username
+		user = models.User.select().where(models.User.username ** username).get()
+	else:
+		session_user = current_user.username
+		user = session_user
 	pets = models.Pet.select().where(models.Pet.owner == user)
 	posts = models.Post.select().where(models.Post.user == user)
-	return render_template('user_profile.html', user = user, pets = pets,
-	posts = posts)
+	return render_template('user_profile.html', user = user, session_user = session_user, 
+		pets = pets, posts = posts)
 
 ''' send a message '''
 @login_required
@@ -224,7 +229,7 @@ def send_message(recipient):
 			recipient = user
 		)
 		return redirect(url_for('dashboard'))
-	return render_template('send_message.html', form = form, recipient = recipient, sender = sender) 
+	return render_template('send_message.html', form = form, recipient = recipient)
 
 ''' accept a job -- click on post '''
 # @login_required

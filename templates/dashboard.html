@@ -7,8 +7,8 @@
 	<a href="{{url_for('new_pet')}}" title="new_pet">New Pet</a>
 	<br>
 	<a href="{{url_for('show')}}">Show Pet</a>
-	<a href="{{url_for('notifications')}}">Notifications</a>
-	<a href="{{url_for('send_notification')}}">Make Notification</a>
+	{# <a href="{{url_for('notifications')}}">Notifications</a>
+	<a href="{{url_for('send_notification')}}">Make Notification</a> #}
 	
 	{% for post in posts %}
 
@@ -17,7 +17,7 @@
 				<time data-time = "{{ post.timestamp }}" class = "distime" datetime = "{{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}">
 					{{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}
 				</time>
-				<a href = "{{ url_for('get_profile', id = post.user) }}">
+				<a href = "{{ url_for('get_profile', username = post.user.username) }}">
 					{{ post.user.username }}
 				</a>
 			</div>
