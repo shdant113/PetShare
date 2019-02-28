@@ -145,7 +145,12 @@ def delete_pet(name):
 def get_user(id):
 	try:
 		usr = models.User.get(models.User.id == id)
-		return render_template('user_profile.html', user = usr)
+		pets = models.Pet.select().where(models.Pet.owner_id == usr.id)
+		petList = []
+		for pet in pets:
+			petList.append(pet.get())
+		print(petList)
+		return render_template('user_profile.html', user = usr, pets = petList)
 	except:
 		return redirect(url_for('dashboard'))
 

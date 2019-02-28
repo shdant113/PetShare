@@ -2,7 +2,12 @@
 
 {% block content %}
 
-    <h1>YOO</h1>
+    <ul>
+        {% for pet in pets %}
+            <li>
+                {{pet.name}}
+            </li>
+        {% endfor %}
+    </ul>
 
-    {{user.username}}
 {% endblock %}
