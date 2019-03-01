@@ -24,7 +24,7 @@ import config
 
 -- Post Update/Edit DONE
 
--- Route Protection for Delete User
+-- Route Protection for Delete User DONE
 -- Route protection for Edit pet
 -- Route protection for Delete Pet
 
@@ -157,24 +157,28 @@ def delete_route_to_confirm(id):
 @login_required
 @app.route('/users/<id>/delete', methods = ('GET', 'DELETE'))
 def delete_user(id):
-	posts = models.Post.delete().where(models.Post.user == id)
-	posts.execute()
+	u = models.User.select().where(models.User.id == id).get()
+	if u == current_user:
+		posts = models.Post.delete().where(models.Post.user == id)
+		posts.execute()
 
-	pets = models.Pet.delete().where(models.Pet.owner == id)
-	pets.execute()
+		pets = models.Pet.delete().where(models.Pet.owner == id)
+		pets.execute()
 
-	sent_messages = models.Message.delete().where(models.Message.sender == id)
-	sent_messages.execute()
+		sent_messages = models.Message.delete().where(models.Message.sender == id)
+		sent_messages.execute()
 
-	received_messages = models.Message.delete().where(models.Message.recipient == id)
-	received_messages.execute()
+		received_messages = models.Message.delete().where(models.Message.recipient == id)
+		received_messages.execute()
 
-	user = models.User.delete().where(models.User.id == id)
-	user.execute()
+		user = models.User.delete().where(models.User.id == id)
+		user.execute()
 
-	logout_user()
+		logout_user()
 
-	return redirect(url_for('dashboard'))
+		return redirect(url_for('dashboard'))
+	else:
+		return render_template('404.html')
 
 '''edit and update a user'''
 @login_required
