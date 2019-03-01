@@ -138,3 +138,14 @@ class MessageForm(Form):
     submit = SubmitField(
         "Submit"
     )
+
+class UserUpdateForm(Form):
+    location = StringField(
+        "Location",
+        validators = [
+            DataRequired()
+        ]
+    )
+    bio = TextAreaField(
+        "Bio"
+    )

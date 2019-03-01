@@ -164,7 +164,21 @@ def delete_user(id):
 @app.route('/users/<id>/edit', methods = ('GET', 'POST'))
 def update_user(id):
 	user = models.User.select().where(models.User.id == id).get()
-	return render_template('edit-user.html', user=user)
+	if user == current_user:
+		form = forms.UserUpdateForm(
+			location = user.location,
+			bio = user.bio
+		)
+		if form.validate_on_submit():
+			u = models.User.update(
+				location = form.location.data,
+				bio = form.bio.data
+			).where(models.User.id == id)
+			u.execute()
+			return redirect(url_for('dashboard'))
+		return render_template('edit-user.html', form=form, user=user)
+	else:
+		return render_template('404.html')
 
 ''' adding a new post '''
 @login_required
