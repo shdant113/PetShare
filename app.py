@@ -353,4 +353,4 @@ if __name__ == '__main__':
     models.init_database()
 
 # only needs to be run for local testing
-# app.run(debug = config.DEBUG, port = config.PORT)
+app.run(debug = config.DEBUG, port = config.PORT)

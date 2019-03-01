@@ -1,0 +1,39 @@
+.header-title {
+	font-family: 'Shadows Into Light', cursive;
+	font-size: 70px;
+	font-weight: 800;
+	text-shadow: 5px 5px 5px black;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.header {
+	border-bottom: 2px solid navy;
+}
+
+.navbar {
+	background-color: navy;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	color: white;
+	width: 100%;
+	text-align: center;
+}
+
+.nav-link, .header-a, .nav-link:hover, .header-a:hover {
+	text-decoration: none;
+	color: white;
+}
+
+.nav-link {
+	font-family: 'Cardo', serif;
+	font-weight: 400;
+	margin: 20px;
+	padding: 0 30px;
+}
+
+.nav-link:hover {
+	color: navy;
+	background-color: white;
+	padding: 10px 30px;
+}
