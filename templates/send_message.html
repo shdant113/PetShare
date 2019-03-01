@@ -2,13 +2,20 @@
 {% from 'macros.html' import render_field  %}
 
 {% block content %}
-
-	<form action="" method="POST">
-		{{ form.hidden_tag() }}
-		<h1>Send a message</h1>
-		{% for field in form %}
-	        {{render_field(field)}}
-	    {% endfor %}
-	</form>
+	<div class="send-message-content">
+		<h2 class="general-header">Send a message to {{ recipient.display_name }}:</h2>
+		<form action="" method="POST">
+			{{ form.hidden_tag() }}
+			<h3>Type your message below.</h3>
+			{% for field in form %}
+				{{render_field(field)}}
+			{% endfor %}
+		</form>
+	</div>
+	<br><br><br><br><br><br><br><hr>
+	<div class="disclaimer">
+		<h7>PetShare is not responsible for the actions of the individuals registered on the site, or their pets. PetShare will not interject in any disputes stemming from the actions of any individual or pet registered on this site. PetShare does not endorse exchanging payments online. By registering on PetShare, users agree to absolve PetShare of any and all responsibility for the actions of any individuals registered on the site, or their pets.</h7>
+	</div>
+	
 
 {% endblock %}

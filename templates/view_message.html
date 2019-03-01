@@ -2,21 +2,31 @@
 {% from 'macros.html' import render_field  %}
 
 {% block content %}
+	<div class="view-message-content">
+		<h2 class="general-header">Your Messages</h2>
+		{% for message in messages %}
+			<div class="card" style="width: 22rem;">
+				<h3 class="new-message">New message from {{ message.sender.username }}!</h3>
+				<h5>At 
+					<time data-time="{{ message.timestamp }}" class="distime" datetime="{{ message.timestamp.strftime('%H:%M') }}">
+						{{ message.timestamp.strftime('%H:%M') }}
+					</time>
+					on
+					<time data-time="{{ message.timestamp }}" class="distime" datetime="{{ message.timestamp.strftime('%Y-%m-%d') }}">
+						{{ message.timestamp.strftime('%Y-%m-%d') }}
+					</time>
+					, {{ message.sender.username}} said:
+				</h5>
+				<p>
+					{{ message.content }}
+				</p>
+				<br>
+				<h5><button><a href="{{ url_for('send_message', recipient = message.sender.id) }}">Reply to this message!</a></button></h5>
+				<br>
+				<button><a href="{{url_for('delete_message', id = message.id)}}">Delete This Message Permanently</a></button>
+			</div>
+		{% endfor %}
+	</div>
 	
-	<h1>Your Messages</h1>
-	{% for message in messages %}
-		<div class="card" style="width: 22rem;">
-			<h3>New message from {{ message.sender.username }}</h3>
-			<h5>
-				<time data-time="{{ message.timestamp }}" class="distime" datetime="{{ message.timestamp.strftime('%Y-%m-%d %H:%M') }}">
-					{{ message.timestamp.strftime('%Y-%m-%d %H:%M') }}
-				</time>
-			</h5>
-			<p>
-				{{ message.content }}
-			</p>
-			<button><a href="{{url_for('delete_message', id = message.id)}}">Delete This Message Permanently</a></button>
-		</div>
-	{% endfor %}
 
 {% endblock %}
