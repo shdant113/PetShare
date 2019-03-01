@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% from 'macros.html' import render_field  %}
+
+{% block content %}
+	<div>
+		<h1>{{ pet.name }}'s page</h1>
+		<br>
+		<h5>{{ pet.name }} is a {{ pet.age }} year old {{ pet.pet_type }}.</h5>
+		<h5>{{ pet.name }}'s owner is {{ pet.owner.username }}.</h5>
+		<h5>{{ pet.owner.username }} registered {{ pet.name }} on: <br>
+			<time data-time = "{{ pet.created_on }}" class = "distime" datetime = "{{ pet.created_on.strftime('%Y-%m-%d') }}">
+					{{ pet.created_on.strftime('%Y-%m-%d') }}
+			</time>
+		</h5>
+	</div>
+	<div>
+		{% if current_user.id == pet.owner.id %}
+		   <a href="{{url_for('update_pet', id=pet.id)}}">Edit {{ pet.name }}'s information</a>
+		   <br>
+		   <a href="{{url_for('delete_pet', id=pet.id)}}">Delete {{ pet.name }} from your pets</a>
+		{% endif %}
+	</div>
+{% endblock %}

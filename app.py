@@ -200,7 +200,7 @@ def notifications():
 @app.route('/pets/<id>')
 def show_pet(id):
 	pet = models.Pet.select().where(models.Pet.id == id).get()
-
+	return render_template('show-pet.html', pet = pet)
 	
 
 ''' edit and update a pet '''

@@ -5,15 +5,17 @@
 	<p>this user id: {{user.id}}</p>
     <div>
    		{{ user.username }} <br>
-		   {% for pet in pets %}
-		   	{% if current_user.id == user.id %}
-			   <a href="{{url_for('update_pet', id=pet.id)}}">{{ pet.name }}</a>
-			   <a href="{{url_for('delete_pet', id=pet.id)}}">delete this pet</a>
-			{% else %}
-				<p>{{pet.name}}</p>
-			{% endif %}
-   		{% endfor %} 
+		   
   		{{ user.bio }} <br>
+    </div>
+    <div>
+    	<h5> {{ user.display_name }}'s pets:</h5>
+    	<ul>
+    		{% for pet in pets %}
+    			<a href="{{ url_for('show_pet', id = pet.id) }}"><li> {{ pet.name }} </li></a>
+    		{% endfor %}
+    	</ul>
+    	
     </div>
 
     {% if user != current_user %}
