@@ -130,22 +130,24 @@ def logout():
 @login_required
 @app.route('/users/<id>/delete', methods = ('GET', 'DELETE'))
 def delete_user(id):
-
-
 	posts = models.Post.delete().where(models.Post.user == id)
 	posts.execute()
 
 	pets = models.Pet.delete().where(models.Pet.owner == id)
 	pets.execute()
 
-	messages = models.Message.delete().where(models.Message.sender == id)
-	messages.execute()
+	sentMessages = models.Message.delete().where(models.Message.sender == id)
+	sentMessages.execute()
+
+	receivedMessages = models.Message.delete().where(models.Message.recipient == id)
+	receivedMessages.execute()
 
 	user = models.User.delete().where(models.User.id == id)
 	user.execute()
 
-	return redirect(url_for('dashboard'))
+	logout_user()
 
+	return redirect(url_for('dashboard'))
 
 ''' adding a new post '''
 @login_required
