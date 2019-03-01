@@ -13,10 +13,12 @@ import config
 
 -- build route to individual pets off user profile? DONE
 -- attach crud routes to each pet DONE
+-- add delete button for messages DONE
+-- fix inbox DONE
+
 -- design all templates
--- add delete button for messages
 -- style?
--- fix semantics?
+-- semantics?
 
 -- deploy
 
