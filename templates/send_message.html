@@ -3,10 +3,9 @@
 
 {% block content %}
 	<div class="send-message-content">
-		<h2 class="general-header">Send a message to {{ recipient.display_name }}:</h2>
+		<h2 class="general-header">Send your message:</h2>
 		<form action="" method="POST">
 			{{ form.hidden_tag() }}
-			<h3>Type your message below.</h3>
 			{% for field in form %}
 				{{render_field(field)}}
 			{% endfor %}
