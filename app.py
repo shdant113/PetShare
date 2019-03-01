@@ -289,4 +289,3 @@ if __name__ == '__main__':
     models.init_database()
 
 app.run(debug = config.DEBUG, port = config.PORT)
-
