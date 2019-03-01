@@ -8,34 +8,7 @@ import forms
 import models
 import config
 
-''' TO DO '''
 
-'''
-
--- build route to individual pets off user profile? DONE
--- attach crud routes to each pet DONE
--- add delete button for messages DONE
--- fix inbox DONE
--- fix dashboard DONE
--- add route to delete posts when sitter is found  DONE
--- fix bug on user profile where the register a pet button shows regardless DONE
-
--- User Delete Route DONE
--- User Update Form and Route DONE
-
--- Post Update/Edit DONE
-
--- Route Protection for Delete User DONE
--- Route protection for Edit pet DONE
--- Route protection for Delete Pet
-
--- design all templates
--- style?
--- semantics?
-
--- deploy
-
-'''
 
 ''' initialize program '''
 app = Flask(__name__)
@@ -379,4 +352,5 @@ if 'ON_HEROKU' in os.environ:
 if __name__ == '__main__':
     models.init_database()
 
-app.run(debug = config.DEBUG, port = config.PORT)
+# only needs to be run for local testing
+# app.run(debug = config.DEBUG, port = config.PORT)
