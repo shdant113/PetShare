@@ -4,14 +4,17 @@ cffi==1.12.2
 Click==7.0
 Flask==1.0.2
 Flask-Bcrypt==0.7.1
+Flask-Cors==3.0.7
 Flask-Login==0.4.1
 Flask-RESTful==0.3.7
 Flask-WTF==0.14.2
+gunicorn==19.9.0
 itsdangerous==1.1.0
 Jinja2==2.10
 MarkupSafe==1.1.1
 peewee==3.8.2
 psycopg2==2.7.7
+psycopg2-binary==2.7.7
 pycparser==2.19
 pytz==2018.9
 six==1.12.0

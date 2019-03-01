@@ -2,12 +2,15 @@ from peewee import *
 from flask_login import UserMixin
 from flask_bcrypt import generate_password_hash
 import datetime
+import os
 
-DATABASE = PostgresqlDatabase(
+from playhouse.db_url import connect
+
+DATABASE = (connect(os.environ.get('DATABASE_URL')) or PostgresqlDatabase(
 	'pets',
 	user = 's_admin',
 	password = 'administrator'
-)
+))
 
 class User(UserMixin, Model):
 	username = CharField(unique=True)

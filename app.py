@@ -1,3 +1,4 @@
+import os
 from flask import Flask, g, render_template, flash, redirect, url_for
 from flask_login import (LoginManager, login_user, logout_user,
 login_required, current_user)
@@ -370,6 +371,10 @@ def delete_message(id):
 	message.execute()
 	return redirect(url_for('read_message'))
 	
+if 'ON_HEROKU' in os.environ:
+	print('deployed ')
+	models.init_database()
+
 ''' initialize database '''
 if __name__ == '__main__':
     models.init_database()
