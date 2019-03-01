@@ -18,7 +18,7 @@
 
     {% if user != current_user %}
     	<p>
-    		<a href="{{ url_for('send_message', recipient = user.username) }}">
+    		<a href="{{ url_for('send_message', recipient = user.id) }}">
     			Send {{ user.username }} a private message
     		</a>
     	</p>
@@ -32,8 +32,8 @@
 				<time data-time = "{{ post.timestamp }}" class = "distime" datetime = "{{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}">
 					{{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}
 				</time>
-				<a href = "{{ url_for('get_profile', username = post.user.username) }}">
-					{{ post.user.username }}
+				<a href = "{{ url_for('get_profile', id = post.user.id) }}">
+					{{ post.user.id }}
 				</a>
 			</div>
 			<div class = "card-body">

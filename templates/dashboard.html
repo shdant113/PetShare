@@ -15,7 +15,7 @@
 				<time data-time = "{{ post.timestamp }}" class = "distime" datetime = "{{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}">
 					{{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}
 				</time>
-				<a href = "{{ url_for('get_profile', username = post.user.username) }}">
+				<a href = "{{ url_for('get_profile', id = post.user.id) }}">
 					{{ post.user.username }}
 				</a>
 			</div>

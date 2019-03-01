@@ -7,6 +7,21 @@ import forms
 import models
 import config
 
+''' TO DO '''
+
+'''
+
+-- build route to individual pets off user profile?
+-- attach crud routes to each pet
+-- design all templates
+-- add delete button for messages
+-- style?
+-- fix semantics?
+
+-- deploy
+
+'''
+
 ''' initialize program '''
 app = Flask(__name__)
 app.secret_key = config.SECRET_KEY
@@ -180,6 +195,14 @@ def notifications():
 	# 	return redirect(url_for('dashboard'))
 	# return render_template('confirm_request.html', form = form)
 
+''' show a pet '''
+@login_required
+@app.route('/pets/<id>')
+def show_pet(id):
+	pet = models.Pet.select().where(models.Pet.id == id).get()
+
+	
+
 ''' edit and update a pet '''
 @login_required
 @app.route('/pets/<id>/edit', methods = ('GET', 'POST'))
@@ -223,15 +246,13 @@ def delete_pet(id):
 	# return render_template('delete-pet.html', form = form)
 
 ''' user profile '''
-@app.route('/users')
-@app.route('/users/<username>')
-def get_profile(username = None):
-
-	if username and username != current_user.username:
-		session_user = current_user.username
-		user = models.User.select().where(models.User.username ** username).get()
+@app.route('/users/<id>')
+def get_profile(id):
+	if id != current_user.id:
+		user = models.User.select().where(models.User.id == id).get()
+		session_user = current_user
 	else:
-		session_user = current_user.username
+		session_user = current_user.id
 		user = session_user
 	pets = models.Pet.select().where(models.Pet.owner == user)
 	posts = models.Post.select().where(models.Post.user == user)
@@ -240,10 +261,7 @@ def get_profile(username = None):
 
 # @app.route('/users/<id>')
 # def get_profile(id):
-# 	if id != current_user.id:
-# 		user = models.User.select().where(models.User.id == id).get()
-# 	else:
-# 		user = current_user
+	
 	
 # 	# user = models.User.select().where(models.User.id == current_user.id).get()
 # 	pets = models.Pet.select().where(models.Pet.owner == user)
