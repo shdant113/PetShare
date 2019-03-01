@@ -23,7 +23,10 @@
 					I need a sitter on: <br>
 					{{ post.requested_time }} <br><br>
 					I am located in: <br>
-					{{ post.user.location }}
+					{{ post.user.location }} <br><br>
+					{% if post.user != current_user %}
+						<a href="{{ url_for('send_message', recipient = post.user.id) }}">Send {{ post.user.display_name }} a private message if you are interested in helping them out!</a>
+					{% endif %}
 				</p>
 			</div>
 		</div>
