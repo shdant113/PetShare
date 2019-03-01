@@ -1,9 +1,16 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-	{% if unread %}
-		<h5>You have unread messages! Check your <a href="{{ url_for('read_message')}}">inbox</a> to read them!</h5>
-	{% endif %}
-	<h5>there's nothing here!</h5>
+	<div class="dash-content" style="text-align: center">	
+		{% if unread %}
+			<h5>You have unread messages! Check your <a href="{{ url_for('read_message')}}">inbox</a> to read them!</h5>
+			<br><br>
+		{% endif %}
+		<h2>Welcome to PetShare, where pet owners and responsible pet lovers can support each other! </h2>
+		<h5>Whether you need a pet sitter while you're away or are looking to enjoy the company of a furry friend, PetShare is here for you! If you need some help, create a post! Register your pet and you can create posts for them, and after just a few short steps potential sitters will be able to come right to you. If you're interested in helping someone in a location near you, send them a message! The process is made simple with PetShare.</h5>
+	</div>
+	<br><br><br>
+	
+	<h5>There are currently no posts! Make a post to get started.</h5>
 
 {% endblock %}
