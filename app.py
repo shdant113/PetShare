@@ -20,7 +20,13 @@ import config
 -- fix bug on user profile where the register a pet button shows regardless DONE
 
 -- User Delete Route DONE
--- User Update Form and Route
+-- User Update Form and Route DONE
+
+-- Post Update/Edit DONE
+
+-- Route Protection for Delete User DONE
+-- Route protection for Edit pet DONE
+-- Route protection for Delete Pet
 
 -- design all templates
 -- style?
@@ -151,24 +157,28 @@ def delete_route_to_confirm(id):
 @login_required
 @app.route('/users/<id>/delete', methods = ('GET', 'DELETE'))
 def delete_user(id):
-	posts = models.Post.delete().where(models.Post.user == id)
-	posts.execute()
+	u = models.User.select().where(models.User.id == id).get()
+	if u == current_user:
+		posts = models.Post.delete().where(models.Post.user == id)
+		posts.execute()
 
-	pets = models.Pet.delete().where(models.Pet.owner == id)
-	pets.execute()
+		pets = models.Pet.delete().where(models.Pet.owner == id)
+		pets.execute()
 
-	sent_messages = models.Message.delete().where(models.Message.sender == id)
-	sent_messages.execute()
+		sent_messages = models.Message.delete().where(models.Message.sender == id)
+		sent_messages.execute()
 
-	received_messages = models.Message.delete().where(models.Message.recipient == id)
-	received_messages.execute()
+		received_messages = models.Message.delete().where(models.Message.recipient == id)
+		received_messages.execute()
 
-	user = models.User.delete().where(models.User.id == id)
-	user.execute()
+		user = models.User.delete().where(models.User.id == id)
+		user.execute()
 
-	logout_user()
+		logout_user()
 
-	return redirect(url_for('dashboard'))
+		return redirect(url_for('dashboard'))
+	else:
+		return render_template('404.html')
 
 '''edit and update a user'''
 @login_required
@@ -224,6 +234,26 @@ def delete_post(id):
 	post.execute()
 	return redirect(url_for('get_profile', id = userid))
 
+'''edit a post'''
+@login_required
+@app.route('/posts/<id>/edit', methods=('GET', 'POST'))
+def update_post(id):
+	post = models.Post.select().where(models.Post.id == id).get()
+	if current_user == post.user:
+		form = forms.UpdatePostForm(
+			content = post.content,
+		)
+		if form.validate_on_submit():
+			p = models.Post.update(
+				content = form.content.data,
+				requested_time = form.requested_time.data
+			)
+			p.execute()
+			return redirect(url_for('dashboard'))
+		return render_template('edit-post.html', form=form)
+	else:
+		return render_template('404.html')
+
 
 ''' add a new pet '''
 @login_required
@@ -254,27 +284,25 @@ def show_pet(id):
 @app.route('/pets/<id>/edit', methods = ('GET', 'POST'))
 def update_pet(id):
 	pet = models.Pet.select().where(models.Pet.id == id).get()
-	print('boutta print this pet')
-	print(pet)
-	form = forms.PetForm(
-		name = pet.name,
-		pet_type = pet.pet_type,
-		age = pet.age,
-		special_requirements = pet.special_requirements
-	)
-	print(form.data)
-	if form.validate_on_submit():
-		p = models.Pet.update(
-			name = form.name.data,
-			age = form.age.data,
-			pet_type = form.pet_type.data,
-			special_requirements = form.special_requirements.data
-		).where(models.Pet.id == id)
-		p.execute()
-		print('save me')
-		print(p)
-		return redirect(url_for('dashboard'))
-	return render_template('edit-pet.html', form=form, pet=pet)
+	if pet.owner == current_user:
+		form = forms.PetForm(
+			name = pet.name,
+			pet_type = pet.pet_type,
+			age = pet.age,
+			special_requirements = pet.special_requirements
+		)
+		if form.validate_on_submit():
+			p = models.Pet.update(
+				name = form.name.data,
+				age = form.age.data,
+				pet_type = form.pet_type.data,
+				special_requirements = form.special_requirements.data
+			).where(models.Pet.id == id)
+			p.execute()
+			return redirect(url_for('dashboard'))
+		return render_template('edit-pet.html', form=form, pet=pet)
+	else:
+		return render_template('404.html')
 
 ''' delete a pet '''
 @login_required
