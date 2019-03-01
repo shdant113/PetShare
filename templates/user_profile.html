@@ -1,71 +1,71 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-	<h1>{{ user.display_name }}'s profile</h1>
-	<p>this user id: {{user.id}}</p>
-	<p>current_user id: {{current_user.id}}</p>
-    <div>
-		   {{ user.username }} <br>
-		   
-		   {{user.location}} <br>
-		   
-  			{{ user.bio }} <br>
-    </div>
-    <div>
-    	<h5> {{ user.display_name }}'s pets:</h5>
-    	<ul>
-    		{% for pet in pets %}
-    			<a href="{{ url_for('show_pet', id = pet.id) }}"><li> {{ pet.name }} </li></a>
-    		{% endfor %}
-    	</ul>
-    	
-	</div>
-	
-	{% if user == current_user %}
-		<a href="{{url_for('update_user', id=user.id)}}">Edit Profile</a><br>
-		<a href="{{ url_for('delete_route_to_confirm', id = user.id) }}">Delete My Profile</a>
-	{% endif %}
-
-    {% if user != current_user %}
-    	<p>
-    		<a href="{{ url_for('send_message', recipient = user.id) }}">
-    			Send {{ user.username }} a private message
-    		</a>
-    	</p>
-    {% endif %}
-
-    {% for post in posts %}
-		
-		
-		<div class = "card" style = "width: 22rem;">
-			<div>
-				<time data-time = "{{ post.timestamp }}" class = "distime" datetime = "{{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}">
-					{{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}
-				</time>
-				<a href = "{{ url_for('get_profile', id = post.user.id) }}">
-					{{ post.user.id }}
-				</a>
-			</div>
-			<div class = "card-body">
-				<p class = "card-text">
-					I am looking for: <br>
-					{{ post.content }} <br><br>
-					I need a sitter on: <br>
-					{{ post.requested_time }} <br><br>
-					I am in: <br>
-					{{ post.user.location }} <br><br>
-					{% if post.user != current_user %}
-						<a href="{{ url_for('send_message', recipient = post.user.id) }}">Send {{ post.user.display_name }} a private message if you are interested in helping them out!</a>
-					{% endif %}
-				</p>
-			</div>
-			{% if user == current_user %}
-				<button><a href="{{ url_for('delete_post', id = post.id) }}">
-					Delete This Post Permanently
-				</a></button>
-			{% endif %}
+	<div class="user-profile-content">
+		<h2 class="general-header">{{ user.display_name }}'s profile</h2>
+		<br>
+		<div id="profile-info">
+			<h5>{{ user.display_name }}'s user ID number is: {{ user.id }}</h5>
+			<h5>{{ user.display_name }} is located in: {{ user.location }}</h5>
+			<h5>A little about {{ user.display_name }}:</h5>
+	  			<p>{{ user.bio }}</p> 
 		</div>
-
-	{% endfor %}
-    {{ super() }}
+		<br>
+	    <div id="profile-pets-info">
+	    	<h5>{{ user.display_name }}'s pets:</h5>
+	    	<ul>
+	    		{% for pet in pets %}
+	    			<a href="{{ url_for('show_pet', id = pet.id) }}"><li> {{ pet.name }} </li></a>
+	    		{% endfor %}
+	    	</ul>
+		</div>
+		<br>
+		{% if user == current_user %}
+			<div id="profile-crud">
+				<a href="{{url_for('update_user', id=user.id)}}">Edit Profile</a><br>
+				<a href="{{ url_for('delete_route_to_confirm', id = user.id) }}">Delete My Profile</a>
+			</div>
+		{% else %}
+			<div id="send-message-profile">
+				<a href="{{ url_for('send_message', recipient = user.id) }}">
+	    			Send {{ user.username }} a private message
+	    		</a>
+			</div>
+	    {% endif %}
+	    <br>
+	    <div id="user-posts">
+	    	<h5>{{ user.display_name }}'s active posts:</h5>
+	    	{% for post in posts %}
+			<div class = "card" style = "width: 22rem;">
+				<div>
+					<time data-time = "{{ post.timestamp }}" class = "distime" datetime = "{{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}">
+						{{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}
+					</time>
+					<a href = "{{ url_for('get_profile', id = post.user.id) }}">
+						{{ post.user.id }}
+					</a>
+				</div>
+				<div class = "card-body">
+					<p class = "card-text">
+						I am looking for: <br>
+						{{ post.content }} <br><br>
+						I need a sitter on: <br>
+						{{ post.requested_time }} <br><br>
+						I am in: <br>
+						{{ post.user.location }} <br><br>
+						{% if post.user != current_user %}
+							<a href="{{ url_for('send_message', recipient = post.user.id) }}">Send {{ post.user.display_name }} a private message if you are interested in helping them out!</a>
+						{% endif %}
+					</p>
+				</div>
+				{% if user == current_user %}
+					<button><a href="{{ url_for('delete_post', id = post.id) }}">
+						Delete This Post Permanently
+					</a></button>
+				{% endif %}
+			</div>
+		{% endfor %}
+	    </div>
+	    {{ super() }}
+	</div>
 {% endblock %}

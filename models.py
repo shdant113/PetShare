@@ -88,7 +88,7 @@ class Post(Model):
 
 	class Meta:
 		database = DATABASE
-		order_by = ('-timestamp',)
+		order_by = ('timestamp',)
 
 
 class Message(Model):

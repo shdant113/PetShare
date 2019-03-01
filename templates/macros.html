@@ -10,6 +10,6 @@
         {% if field.name != 'csrf_token' %}
             <label>{{ field.label }}</label> <br>
         {% endif %}
-        {{ field(placeholder=field.label.text) }}
+        {{ field() }}
     </div>
 {% endmacro %}
