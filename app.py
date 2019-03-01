@@ -268,6 +268,13 @@ def send_message(recipient):
 		return redirect(url_for('dashboard'))
 	return render_template('send_message.html', form = form, recipient = recipient)
 
+''' view your messages '''
+@login_required
+@app.route('/messages')
+def read_message():
+	messages = models.Message.select().where(models.Message.recipient == current_user.id).get()
+	return render_template('view_message.html', messages = messages)
+
 ''' accept a job -- click on post '''
 # @login_required
 # @app.route('/accept_job', methods = ('GET', 'POST'))
@@ -278,4 +285,3 @@ if __name__ == '__main__':
     models.init_database()
 
 app.run(debug = config.DEBUG, port = config.PORT)
-

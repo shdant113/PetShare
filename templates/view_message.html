@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% from 'macros.html' import render_field  %}
+
+{% block content %}
+	
+	<h1>Your Messages</h1>
+	
+	<div class="card" style="width: 22rem;">
+		<h3>New message from {{ messages.sender.username }}</h3>
+		<h5>
+			<time data-time="{{ messages.timestamp }}" class="distime" datetime="{{ messages.timestamp.strftime('%Y-%m-%d %H:%M') }}">
+				{{ messages.timestamp.strftime('%Y-%m-%d %H:%M') }}
+			</time>
+		</h5>
+		<p>
+			{{ messages.content }}
+		</p>
+	</div>
+		
+	
+
+{% endblock %}

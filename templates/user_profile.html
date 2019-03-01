@@ -2,7 +2,6 @@
 
 {% block content %}
 	<h1>{{ user.display_name }}'s profile</h1>
-	<p>current user id: {{current_user.id}}</p>
 	<p>this user id: {{user.id}}</p>
     <div>
    		{{ user.username }} <br>
@@ -20,7 +19,7 @@
     {% if user != current_user %}
     	<p>
     		<a href="{{ url_for('send_message', recipient = user.username) }}">
-    			Send {{ user }} a private message
+    			Send {{ user.username }} a private message
     		</a>
     	</p>
     {% endif %}
@@ -39,15 +38,10 @@
 			</div>
 			<div class = "card-body">
 				<p class = "card-text">
-<<<<<<< HEAD
 					I am looking for: <br>
 					{{ post.content }} <br><br>
 					I need a sitter on: <br>
 					{{ post.requested_time }}
-=======
-					Request for: {{post.pet.name}}<br>
-					{{ post.content }}
->>>>>>> 5d66d25190af48616f0d6546fce9b9d14524c1c5
 				</p>
 			</div>
 		</div>
