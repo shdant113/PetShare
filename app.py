@@ -20,7 +20,9 @@ import config
 -- fix bug on user profile where the register a pet button shows regardless DONE
 
 -- User Delete Route DONE
--- User Update Form and Route
+-- User Update Form and Route DONE
+
+-- Post Update/Edit
 
 -- design all templates
 -- style?
@@ -223,6 +225,25 @@ def delete_post(id):
 	userid = models.User.select().where(models.User.id == current_user.id).get()
 	post.execute()
 	return redirect(url_for('get_profile', id = userid))
+
+@login_required
+@app.route('/posts/<id>/edit', methods=('GET', 'POST'))
+def update_post(id):
+	post = models.Post.select().where(models.Post.id == id).get()
+	if current_user == post.user:
+		form = forms.UpdatePostForm(
+			content = post.content,
+		)
+		if form.validate_on_submit():
+			p = models.Post.update(
+				content = form.content.data,
+				requested_time = form.requested_time.data
+			)
+			p.execute()
+			return redirect(url_for('dashboard'))
+		return render_template('edit-post.html', form=form)
+	else:
+		return render_template('404.html')
 
 
 ''' add a new pet '''

@@ -9,7 +9,7 @@
 		   
 		   {{user.location}} <br>
 		   
-  			{{ user.bio }} <br>
+			{{ user.bio }} <br>
     </div>
     <div>
     	<h5> {{ user.display_name }}'s pets:</h5>
@@ -57,9 +57,13 @@
 				</p>
 			</div>
 			{% if user == current_user %}
+				<button><a href="{{url_for('update_post', id = post.id)}}">
+					Edit This Post
+				</a></button>
 				<button><a href="{{ url_for('delete_post', id = post.id) }}">
 					Delete This Post Permanently
 				</a></button>
+				
 			{% endif %}
 		</div>
 

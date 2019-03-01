@@ -102,6 +102,21 @@ class PostForm(Form):
         ]
     )
 
+class UpdatePostForm(Form):
+    content = TextAreaField(
+        "List all the details",
+        validators = [
+            DataRequired()
+        ]
+    )
+    requested_time = DateTimeField(
+        "When do you need a pet sitter?", format='%m/%d/%y',
+        default = datetime.datetime.now,
+        validators = [
+            DataRequired()
+        ]
+    )
+
 ''' new pet '''
 class PetForm(Form):
     name = StringField(
