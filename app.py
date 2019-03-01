@@ -181,7 +181,7 @@ def new_post():
 @app.route('/posts/<id>/delete', methods = ('GET', 'DELETE'))
 def delete_post(id):
 	post = models.Post.delete().where(models.Post.id == id)
-	userid = models.User.select().where(models.User.id == current_user.id)
+	userid = models.User.select().where(models.User.id == current_user.id).get()
 	post.execute()
 	return redirect(url_for('get_profile', id = userid))
 

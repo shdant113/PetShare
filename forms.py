@@ -127,7 +127,6 @@ class PetForm(Form):
     )
 
 ''' new message '''
-
 class MessageForm(Form):
     content = TextAreaField(
         "Content",

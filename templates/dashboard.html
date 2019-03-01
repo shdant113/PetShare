@@ -10,7 +10,7 @@
 					{{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}
 				</time>
 				<a href = "{{ url_for('get_profile', id = post.user.id) }}">
-					{{ post.user.username }}
+					{{ post.user.display_name }}
 				</a>
 			</div>
 			<div class = "card-body">
