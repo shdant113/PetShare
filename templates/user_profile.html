@@ -3,10 +3,13 @@
 {% block content %}
 	<h1>{{ user.display_name }}'s profile</h1>
 	<p>this user id: {{user.id}}</p>
+	<p>current_user id: {{current_user.id}}</p>
     <div>
-   		{{ user.username }} <br>
+		   {{ user.username }} <br>
 		   
-  		{{ user.bio }} <br>
+		   {{user.location}} <br>
+		   
+  			{{ user.bio }} <br>
     </div>
     <div>
     	<h5> {{ user.display_name }}'s pets:</h5>
@@ -19,6 +22,7 @@
 	</div>
 	
 	{% if user == current_user %}
+		<a href="{{url_for('update_user', id=user.id)}}">Edit Profile</a><br>
 		<a href="{{ url_for('delete_route_to_confirm', id = user.id) }}">Delete My Profile</a>
 	{% endif %}
 
