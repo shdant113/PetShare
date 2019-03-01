@@ -129,7 +129,14 @@ def logout():
 	logout_user()
 	return redirect(url_for('dashboard'))
 
-'''delete a user'''
+''' click delete user button, send to confirmation page '''
+@login_required
+@app.route('/users/<id>/are_you_sure')
+def delete_route_to_confirm(id):
+	user = models.User.select().where(models.User.id == id)
+	return render_template('confirm-delete-profile.html', user = user, id = id)	
+
+''' after confirmation, delete a user '''
 @login_required
 @app.route('/users/<id>/delete', methods = ('GET', 'DELETE'))
 def delete_user(id):
