@@ -1,36 +1,40 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-
-	{% if unread %}
-		<h5>You have unread messages! Check your <a href="{{ url_for('read_message')}}">inbox</a> to read them!</h5>
-	{% endif %}
-	{% for post in posts %}
-
-		<div class = "card" style = "width: 22rem;">
-			<div>
-				<time data-time = "{{ post.timestamp }}" class = "distime" datetime = "{{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}">
-					{{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}
-				</time>
-				<a href = "{{ url_for('get_profile', id = post.user.id) }}">
-					{{ post.user.display_name }}
-				</a>
+	<div class="dash-content" style="text-align: center">	
+		{% if unread %}
+			<h5>You have unread messages! Check your <a href="{{ url_for('read_message')}}">inbox</a> to read them!</h5>
+			<br><br>
+		{% endif %}
+		<h2>Welcome to PetShare, where pet owners and responsible pet lovers can support each other! </h2>
+		<h5>Whether you need a pet sitter while you're away or are looking to enjoy the company of a furry friend, PetShare is here for you! If you need some help, create a post! Register your pet and you can create posts for them, and after just a few short steps potential sitters will be able to come right to you. If you're interested in helping someone in a location near you, send them a message! The process is made simple with PetShare.</h5>
+	</div>
+	<br><br><br>
+	<div class="feed">
+		{% for post in posts %}
+			<div class="card" style="width: 22rem; text-align: center;">
+				<div>
+					<time data-time="{{ post.timestamp }}" class = "distime" datetime = "{{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}">
+						{{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}
+					</time>
+					<a href="{{ url_for('get_profile', id = post.user.id) }}">
+						{{ post.user.display_name }}
+					</a>
+				</div>
+				<div class="card-body">
+					<p class="card-text">
+						I am looking for: <br>
+						{{ post.content }} <br><br>
+						I need a sitter on: <br>
+						{{ post.requested_time }} <br><br>
+						I am located in: <br>
+						{{ post.user.location }} <br><br>
+						{% if post.user != current_user %}
+							<a href="{{ url_for('send_message', recipient = post.user.id) }}">Send {{ post.user.display_name }} a private message if you are interested in helping them out!</a>
+						{% endif %}
+					</p>
+				</div>
 			</div>
-			<div class = "card-body">
-				<p class = "card-text">
-					I am looking for: <br>
-					{{ post.content }} <br><br>
-					I need a sitter on: <br>
-					{{ post.requested_time }} <br><br>
-					I am located in: <br>
-					{{ post.user.location }} <br><br>
-					{% if post.user != current_user %}
-						<a href="{{ url_for('send_message', recipient = post.user.id) }}">Send {{ post.user.display_name }} a private message if you are interested in helping them out!</a>
-					{% endif %}
-				</p>
-			</div>
-		</div>
-
-	{% endfor %}
-
+		{% endfor %}
+	</div>
 {% endblock %}
