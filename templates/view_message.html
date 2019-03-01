@@ -4,19 +4,19 @@
 {% block content %}
 	
 	<h1>Your Messages</h1>
-	
-	<div class="card" style="width: 22rem;">
-		<h3>New message from {{ messages.sender.username }}</h3>
-		<h5>
-			<time data-time="{{ messages.timestamp }}" class="distime" datetime="{{ messages.timestamp.strftime('%Y-%m-%d %H:%M') }}">
-				{{ messages.timestamp.strftime('%Y-%m-%d %H:%M') }}
-			</time>
-		</h5>
-		<p>
-			{{ messages.content }}
-		</p>
-	</div>
-		
-	
+	{% for message in messages %}
+		<div class="card" style="width: 22rem;">
+			<h3>New message from {{ message.sender.username }}</h3>
+			<h5>
+				<time data-time="{{ message.timestamp }}" class="distime" datetime="{{ message.timestamp.strftime('%Y-%m-%d %H:%M') }}">
+					{{ message.timestamp.strftime('%Y-%m-%d %H:%M') }}
+				</time>
+			</h5>
+			<p>
+				{{ message.content }}
+			</p>
+			<button><a href="{{url_for('delete_message', id = message.id)}}">Delete This Message Permanently</a></button>
+		</div>
+	{% endfor %}
 
 {% endblock %}

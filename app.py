@@ -11,8 +11,8 @@ import config
 
 '''
 
--- build route to individual pets off user profile?
--- attach crud routes to each pet
+-- build route to individual pets off user profile? DONE
+-- attach crud routes to each pet DONE
 -- design all templates
 -- add delete button for messages
 -- style?
@@ -110,7 +110,6 @@ def login():
 @login_required
 @app.route('/logout')
 def logout():
-	# destroy our session
 	logout_user()
 	return redirect(url_for('dashboard'))
 
@@ -153,47 +152,6 @@ def new_pet():
 		)
 		return redirect(url_for('dashboard'))
 	return render_template('add-pet.html', form = form)
-
-''' show index of pets '''
-@login_required
-@app.route('/show')
-def show():
-
-	## THIS ROUTE IS FOR TESTING ONLY IT SHOULD NOT BE ON THE FINAL PRODUCT
-	
-	# if username and username != current_user.username:
-	# 	user = (models.User.select()
-	# 		.where(models.User.username ** username).get())
-	# 	pets = user.pets
-	# else: 
-	user = models.User.select().where(models.User.id == current_user.id).get()
-	pets = models.Pet.select()
-		#.where(models.Pet.owner == user).get()
-	return render_template('user_profile.html', user = user, pets = pets)
-
-''' show all notifications '''
-@login_required
-@app.route('/notifications')
-def notifications():
-	notifications = current_user.notifications
-	user = current_user
-	return render_template('notifications.html', user = user, notifications = notifications)
-
-''' send notification '''
-# @login_required
-# @app.route('/send_notification', methods = ('GET', 'PUT'))
-# def send_notification():
-	## user makes a post
-		## post is assigned to user --> user.posts
-	## another user clicks on button on the post
-		## user is assigned as sitter
-		## post has sitter = someone
-		## original user needs to see this
-		## original user fills out form that updates post to job_accepted = True
-	
-
-	# 	return redirect(url_for('dashboard'))
-	# return render_template('confirm_request.html', form = form)
 
 ''' show a pet '''
 @login_required
@@ -240,10 +198,6 @@ def delete_pet(id):
 	pet = models.Pet.delete().where(models.Pet.id == id)
 	pet.execute()
 	return redirect(url_for('dashboard'))
-	# if form.validate_on_submit():
-	# 	models.Pet.name.delete()
-	# 	return redirect(url_for('dashboard'))
-	# return render_template('delete-pet.html', form = form)
 
 ''' user profile '''
 @app.route('/users/<id>')
@@ -258,20 +212,6 @@ def get_profile(id):
 	posts = models.Post.select().where(models.Post.user == user)
 	return render_template('user_profile.html', user = user, session_user = session_user, 
 		pets = pets, posts = posts)
-
-# @app.route('/users/<id>')
-# def get_profile(id):
-	
-	
-# 	# user = models.User.select().where(models.User.id == current_user.id).get()
-# 	pets = models.Pet.select().where(models.Pet.owner == user)
-# 	posts = models.Post.select().where(models.Post.user == user)
-# 	return render_template(
-# 		'user_profile.html',
-# 		user = user,
-# 		pets = pets,
-# 		posts = posts
-# 		)
 
 ''' send a message '''
 @login_required
@@ -293,14 +233,26 @@ def send_message(recipient):
 @login_required
 @app.route('/messages')
 def read_message():
-	messages = models.Message.select().where(models.Message.recipient == current_user.id).get()
-	messages_to_update = models.Message.select().where(
-		models.Message.recipient == current_user.id
-		and models.Message.unread == True)
-	if messages_to_update:
-		update = models.Message.update(unread = False)
-		update.execute()
-	return render_template('view_message.html', messages = messages)
+	messages = models.Message.select().where(models.Message.recipient == current_user.id)
+	if messages:
+		messages_to_update = models.Message.select().where(
+			models.Message.recipient == current_user.id
+			and models.Message.unread == True)
+		if messages_to_update:
+			update = models.Message.update(unread = False)
+			update.execute()
+		return render_template('view_message.html', messages = messages)
+	else:
+		return render_template('no_messages.html')
+	
+
+''' delete a message '''
+@login_required
+@app.route('/messages/<id>/delete', methods = ('GET', 'DELETE'))
+def delete_message(id):
+	message = models.Message.delete().where(models.Message.id == id)
+	message.execute()
+	return redirect(url_for('read_message'))
 	
 ''' initialize database '''
 if __name__ == '__main__':
