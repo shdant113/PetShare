@@ -22,7 +22,11 @@ import config
 -- User Delete Route DONE
 -- User Update Form and Route DONE
 
--- Post Update/Edit
+-- Post Update/Edit DONE
+
+-- Route Protection for Delete User
+-- Route protection for Edit pet
+-- Route protection for Delete Pet
 
 -- design all templates
 -- style?
@@ -226,6 +230,7 @@ def delete_post(id):
 	post.execute()
 	return redirect(url_for('get_profile', id = userid))
 
+'''edit a post'''
 @login_required
 @app.route('/posts/<id>/edit', methods=('GET', 'POST'))
 def update_post(id):
