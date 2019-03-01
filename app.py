@@ -15,6 +15,8 @@ import config
 -- attach crud routes to each pet DONE
 -- add delete button for messages DONE
 -- fix inbox DONE
+-- fix dashboard DONE
+-- add route to delete posts when sitter is found
 
 -- design all templates
 -- style?
@@ -66,10 +68,15 @@ def pet_404(e):
 def dashboard():
 	posts = models.Post.select()
 	user = current_user
-	messages = models.Message.select().where(models.Message.unread == True)
+	messages_to_user = models.Message.select().where(models.Message.recipient == user.id)
+	messages = messages_to_user.select().where(models.Message.unread == True)
 	if messages:
 		flash('You have unread messages!')
-	return render_template('dashboard.html', posts = posts, user = user)
+	if posts:
+		return render_template('dashboard.html', posts = posts, user = user)
+	else:
+		return render_template('dashboard-empty.html', user = user)
+
 
 ''' registration '''
 @app.route('/register', methods = ('GET', 'POST'))

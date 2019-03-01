@@ -18,15 +18,6 @@ def email_exists(form, field):
     if User.select().where(User.email == field.data).exists():
         raise ValidationError('User with that email already exists.')
 
-# def pet_matches(form, field):
-#     if User.select().where(Pet.name != field.data):
-#         raise ValidationError('You have not registered this pet.')
-
-# def pet_exists(form, field):
-#     name = Pet.select().where(Pet.name == field.data)
-#     if User.select().where()
-        # raise ValidationError('You already registered this pet.')
-
 
 ''' registration '''
 class RegisterForm(Form):
@@ -95,10 +86,6 @@ class PostForm(Form):
     pet = SelectField(
         coerce=int,
         label='pets'
-        # validators = [
-        #     DataRequired(),
-        #     # pet_matches
-        # ]
     )
     content = TextAreaField(
         "List all the details!", 
