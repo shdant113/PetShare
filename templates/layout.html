@@ -17,6 +17,7 @@
 				{% if current_user.is_authenticated %}
 				  <a class="nav-item nav-link" href="{{url_for('get_profile', id=current_user.id)}}">Your Profile</a>
 				  <a class="nav-item nav-link" href="{{url_for('new_post')}}">New Post</a>
+				  <a class="nav-item nav-link" href="{{url_for('new_pet')}}">New Pet</a>
 				  <a class="nav-item nav-link" href="{{url_for('logout')}}">Logout</a>
 				  <a class="nav-item nav-link" href="{{url_for('read_message')}}">Messages</a>
 				{% else %}
@@ -31,7 +32,7 @@
 
 		<div class="row">
 			<div class="col">
-				{% with messages = get_flashed_messages(with_categories=False) %}
+				{% with messages = get_flashed_messages(with_categories=True) %}
 					{% if messages %}
 						{% for message in messages %}
 							<div>{{ messages }}</div>

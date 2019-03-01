@@ -17,6 +17,7 @@ import config
 -- fix inbox DONE
 -- fix dashboard DONE
 -- add route to delete posts when sitter is found
+-- fix bug on user profile where the register a pet button shows regardless
 
 -- design all templates
 -- style?
@@ -71,7 +72,7 @@ def dashboard():
 	messages_to_user = models.Message.select().where(models.Message.recipient == user.id)
 	messages = messages_to_user.select().where(models.Message.unread == True)
 	if messages:
-		flash('You have unread messages!')
+		flash('You have unread messages!', 'message')
 	if posts:
 		return render_template('dashboard.html', posts = posts, user = user)
 	else:
