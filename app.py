@@ -16,8 +16,8 @@ import config
 -- add delete button for messages DONE
 -- fix inbox DONE
 -- fix dashboard DONE
--- add route to delete posts when sitter is found
--- fix bug on user profile where the register a pet button shows regardless
+-- add route to delete posts when sitter is found 
+-- fix bug on user profile where the register a pet button shows regardless DONE
 
 -- design all templates
 -- style?
@@ -67,16 +67,19 @@ def pet_404(e):
 @login_required
 @app.route('/')
 def dashboard():
-	posts = models.Post.select()
-	user = current_user
-	messages_to_user = models.Message.select().where(models.Message.recipient == user.id)
-	messages = messages_to_user.select().where(models.Message.unread == True)
-	if messages:
-		flash('You have unread messages!', 'message')
-	if posts:
-		return render_template('dashboard.html', posts = posts, user = user)
-	else:
-		return render_template('dashboard-empty.html', user = user)
+	if current_user.is_anonymous:
+		return redirect(url_for('login'))
+	else: 
+		posts = models.Post.select()
+		user = current_user
+		messages_to_user = models.Message.select().where(models.Message.recipient == user.id)
+		messages = messages_to_user.select().where(models.Message.unread == True)
+		if messages:
+			flash('You have unread messages!', 'message')
+		if posts:
+			return render_template('dashboard.html', posts = posts, user = user)
+		else:
+			return render_template('dashboard-empty.html', user = user)
 
 
 ''' registration '''
@@ -146,6 +149,16 @@ def new_post():
 		)
 		return redirect(url_for('dashboard'))
 	return render_template('post.html', form = form)
+
+''' removing a post when a job is accepted '''
+@login_required
+@app.route('/posts/<id>/delete', methods = ('GET', 'DELETE'))
+def delete_post(id):
+	post = models.Post.delete().where(models.Post.id == id)
+	userid = models.User.select().where(models.User.id == current_user.id)
+	post.execute()
+	return redirect(url_for('get_profile', id = userid))
+
 
 ''' add a new pet '''
 @login_required

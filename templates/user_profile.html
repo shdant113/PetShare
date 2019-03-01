@@ -46,6 +46,11 @@
 					{{ post.requested_time }}
 				</p>
 			</div>
+			{% if user == current_user %}
+				<button><a href="{{ url_for('delete_post', id = post.id) }}">
+					Delete This Post Permanently
+				</a></button>
+			{% endif %}
 		</div>
 
 	{% endfor %}
