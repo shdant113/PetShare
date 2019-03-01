@@ -2,6 +2,9 @@
 
 {% block content %}
 
+	{% if unread %}
+		<h5>You have unread messages! Check your <a href="{{ url_for('read_message')}}">inbox</a> to read them!</h5>
+	{% endif %}
 	{% for post in posts %}
 
 		<div class = "card" style = "width: 22rem;">

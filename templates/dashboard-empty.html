@@ -1,7 +1,9 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-
+	{% if unread %}
+		<h5>You have unread messages! Check your <a href="{{ url_for('read_message')}}">inbox</a> to read them!</h5>
+	{% endif %}
 	<h5>there's nothing here!</h5>
 
 {% endblock %}

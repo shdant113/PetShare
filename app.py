@@ -16,7 +16,7 @@ import config
 -- add delete button for messages DONE
 -- fix inbox DONE
 -- fix dashboard DONE
--- add route to delete posts when sitter is found 
+-- add route to delete posts when sitter is found  DONE
 -- fix bug on user profile where the register a pet button shows regardless DONE
 
 -- User Delete Route
@@ -75,14 +75,25 @@ def dashboard():
 	else: 
 		posts = models.Post.select()
 		user = current_user
-		messages_to_user = models.Message.select().where(models.Message.recipient == user.id)
-		messages = messages_to_user.select().where(models.Message.unread == True)
+		received_messages = models.Message.select().where(models.Message.recipient == user.id)
+		messages = received_messages.select().where(models.Message.unread == True)
 		if messages:
-			flash('You have unread messages!', 'message')
-		if posts:
-			return render_template('dashboard.html', posts = posts, user = user)
+			if user.id == models.Message.recipient:
+				if posts:
+					return render_template('dashboard.html', unread = True, posts = posts, user = user)
+				else:
+					return render_template('dashboard-empty.html', unread = True, user = user)
+			else:
+				if posts:
+					return render_template('dashboard.html', unread = False, posts = posts, user = user)
+				else:
+					return render_template('dashboard-empty.html', unread = False, user = user)
 		else:
-			return render_template('dashboard-empty.html', user = user)
+			if posts:
+				return render_template('dashboard.html', unread = False, posts = posts, user = user)
+			else:
+				return render_template('dashboard-empty.html', unread = False, user = user)
+
 
 
 ''' registration '''
@@ -146,11 +157,11 @@ def delete_user(id):
 	pets = models.Pet.delete().where(models.Pet.owner == id)
 	pets.execute()
 
-	sentMessages = models.Message.delete().where(models.Message.sender == id)
-	sentMessages.execute()
+	sent_messages = models.Message.delete().where(models.Message.sender == id)
+	sent_messages.execute()
 
-	receivedMessages = models.Message.delete().where(models.Message.recipient == id)
-	receivedMessages.execute()
+	received_messages = models.Message.delete().where(models.Message.recipient == id)
+	received_messages.execute()
 
 	user = models.User.delete().where(models.User.id == id)
 	user.execute()

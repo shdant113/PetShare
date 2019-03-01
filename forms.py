@@ -30,7 +30,8 @@ class RegisterForm(Form):
                 message = ("Username should be letters, numbers, and underscores only.")
             ),
             username_exists
-        ])
+        ]
+    )
     email = StringField(
         'Email',
         validators = [
