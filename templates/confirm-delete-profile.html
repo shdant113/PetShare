@@ -1,7 +1,16 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-	<a href="{{url_for('delete_user', id=current_user.id)}}">Delete My Profile</a>
+	<div="confirm-delete-content">
+		<h2 class="general-header">
+			You were sent here because you indicated that you wanted to delete your account. There is still time to reconsider.
+		</h2>
+		<h5>
+			Deleting your account is a permanent decision. There is no recovery process. You will have to start all over.
+		</h5>
+		<h5>If you are still undeterred, press the button below and your account will be permanently deleted.</h5>
+		<a href="{{url_for('delete_user', id=current_user.id)}}">Delete My Profile</a>
+	</div>
 {% endblock %}
 
 
