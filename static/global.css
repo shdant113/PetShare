@@ -15,3 +15,25 @@ body, html {
 html {
 	background-image: url('https://animalhospitalschampionsnorthwestjonesrd.files.wordpress.com/2014/02/dogsatdogpark.jpg')
 }
+
+.general-header, .info-header, label, button, input {
+	font-family: 'Domine', serif;
+	font-weight: 800;
+	color: navy;
+}
+
+.general-header {
+	font-size: 40px;
+}
+
+.info-header {
+	font-size: 20px;
+}
+
+label, button {
+	margin: 5px;
+}
+
+input, button {
+	width: 150px;
+}

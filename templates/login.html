@@ -1,11 +1,14 @@
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='login.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='global.css')}}">
+<link href="https://fonts.googleapis.com/css?family=Domine" rel="stylesheet">
 {% extends 'layout.html' %}
 {% from 'macros.html' import render_field  %}
 
 {% block content %}
 	<div class="login-content">
 		<h2 class="general-header">Welcome to PetShare!</h2>
-		<h5>If you're new here, you can click <a href="{{url_for('register_account')}}">here</a> to get started.</h5>
-		<h5>If you are already a PetShare user, welcome back! Log in below.</h5>
+		<h5 class="info-header">If you're new here, you can click <a href="{{url_for('register_account')}}">here</a> to get started.</h5>
+		<h5 class="info-header">If you are already a PetShare user, welcome back! Log in below.</h5>
 		<br>
 		<form action='' method='POST'>
 			{{ form.hidden_tag() }}
