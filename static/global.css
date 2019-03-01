@@ -30,8 +30,9 @@ html {
 	font-size: 20px;
 }
 
-label, button {
+label, button, input {
 	margin: 5px;
+	font-size: 15px;
 }
 
 input, button {
