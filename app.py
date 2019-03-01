@@ -49,6 +49,9 @@ def pet_404(e):
 def dashboard():
 	posts = models.Post.select()
 	user = current_user
+	messages = models.Message.select().where(models.Message.unread == True)
+	if messages:
+		flash('You have unread messages!')
 	return render_template('dashboard.html', posts = posts, user = user)
 
 ''' registration '''
@@ -273,12 +276,13 @@ def send_message(recipient):
 @app.route('/messages')
 def read_message():
 	messages = models.Message.select().where(models.Message.recipient == current_user.id).get()
+	messages_to_update = models.Message.select().where(
+		models.Message.recipient == current_user.id
+		and models.Message.unread == True)
+	if messages_to_update:
+		update = models.Message.update(unread = False)
+		update.execute()
 	return render_template('view_message.html', messages = messages)
-
-''' accept a job -- click on post '''
-# @login_required
-# @app.route('/accept_job', methods = ('GET', 'POST'))
-# def accept_job():
 	
 ''' initialize database '''
 if __name__ == '__main__':

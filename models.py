@@ -96,6 +96,7 @@ class Message(Model):
 	sender = ForeignKeyField(User, backref = 'messages')
 	recipient = ForeignKeyField(User, backref = 'messages')
 	content = CharField()
+	unread = BooleanField(default = True)
 
 	class Meta:
 		database = DATABASE
