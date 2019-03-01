@@ -19,7 +19,7 @@ import config
 -- add route to delete posts when sitter is found 
 -- fix bug on user profile where the register a pet button shows regardless DONE
 
--- User Delete Route
+-- User Delete Route DONE
 -- User Update Form and Route
 
 -- design all templates
@@ -151,6 +151,13 @@ def delete_user(id):
 	logout_user()
 
 	return redirect(url_for('dashboard'))
+
+'''edit and update a user'''
+@login_required
+@app.route('/users/<id>/edit', methods = ('GET', 'POST'))
+def update_user(id):
+	user = models.User.select().where(models.User.id == id).get()
+	return render_template('edit-user.html', user=user)
 
 ''' adding a new post '''
 @login_required
