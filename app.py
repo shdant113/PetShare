@@ -25,7 +25,7 @@ import config
 -- Post Update/Edit DONE
 
 -- Route Protection for Delete User DONE
--- Route protection for Edit pet
+-- Route protection for Edit pet DONE
 -- Route protection for Delete Pet
 
 -- design all templates
@@ -284,27 +284,25 @@ def show_pet(id):
 @app.route('/pets/<id>/edit', methods = ('GET', 'POST'))
 def update_pet(id):
 	pet = models.Pet.select().where(models.Pet.id == id).get()
-	print('boutta print this pet')
-	print(pet)
-	form = forms.PetForm(
-		name = pet.name,
-		pet_type = pet.pet_type,
-		age = pet.age,
-		special_requirements = pet.special_requirements
-	)
-	print(form.data)
-	if form.validate_on_submit():
-		p = models.Pet.update(
-			name = form.name.data,
-			age = form.age.data,
-			pet_type = form.pet_type.data,
-			special_requirements = form.special_requirements.data
-		).where(models.Pet.id == id)
-		p.execute()
-		print('save me')
-		print(p)
-		return redirect(url_for('dashboard'))
-	return render_template('edit-pet.html', form=form, pet=pet)
+	if pet.owner == current_user:
+		form = forms.PetForm(
+			name = pet.name,
+			pet_type = pet.pet_type,
+			age = pet.age,
+			special_requirements = pet.special_requirements
+		)
+		if form.validate_on_submit():
+			p = models.Pet.update(
+				name = form.name.data,
+				age = form.age.data,
+				pet_type = form.pet_type.data,
+				special_requirements = form.special_requirements.data
+			).where(models.Pet.id == id)
+			p.execute()
+			return redirect(url_for('dashboard'))
+		return render_template('edit-pet.html', form=form, pet=pet)
+	else:
+		return render_template('404.html')
 
 ''' delete a pet '''
 @login_required
