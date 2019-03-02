@@ -1,9 +1,10 @@
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='show-pet.css')}}">
+<link href="https://fonts.googleapis.com/css?family=Domine|Patrick+Hand" rel="stylesheet">
 {% extends 'layout.html' %}
-{% from 'macros.html' import render_field  %}
 
 {% block content %}
-	<div class="show-pet-content">
-		<h2 class="general-header">{{ pet.name }}'s page</h2>
+	<div id="show-pet-content">
+		<h2 class="general-header">{{ pet.name }}'s Profile</h2>
 		<br>
 		<h5>{{ pet.name }} is a {{ pet.age }} year old {{ pet.pet_type }}.</h5>
 		<h5>{{ pet.name }}'s owner is {{ pet.owner.username }}.</h5>
@@ -13,9 +14,11 @@
 			</time>
 		</h5>
 		{% if current_user.id == pet.owner.id %}
+			<hr>
 		   <a href="{{url_for('update_pet', id=pet.id)}}">Edit {{ pet.name }}'s information</a>
 		   <br>
 		   <a href="{{url_for('delete_pet', id=pet.id)}}">Delete {{ pet.name }} from your pets</a>
+		   <br>
 		{% endif %}
 	</div>
 {% endblock %}

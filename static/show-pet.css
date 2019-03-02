@@ -1,0 +1,30 @@
+#show-pet-content {
+	margin: 10px auto;
+	background-color: rgba(255, 255, 255, 0.4);
+	width: max-content;
+	padding: 0 100px 10px 100px;
+	border: 2px solid navy;
+	border-radius: 20px;
+}
+
+#show-pet-content > h5 {
+	font-family: 'Patrick Hand', cursive;
+	font-size: 20px;
+}
+
+#show-pet-content > h5, #show-pet-content > a {
+	color: navy;
+}
+
+#show-pet-content > a {
+	font-family: 'Domine', serif;
+	font-weight: 800;
+	text-decoration: none;
+}
+
+#show-pet-content > a:hover {
+	color: rgba(255, 255, 255, 0.8);
+	background-color: navy;
+	padding: 5px;
+	border-radius: 20px;
+}
