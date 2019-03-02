@@ -86,7 +86,7 @@ class LoginForm(Form):
 class PostForm(Form):
     pet = SelectField(
         coerce=int,
-        label='pets'
+        label='Choose from your pets.'
     )
     content = TextAreaField(
         "List all the details!", 

@@ -1,3 +1,4 @@
+<link href="https://fonts.googleapis.com/css?family=Domine" rel="stylesheet"> 
 {% extends 'layout.html' %}
 {% from 'macros.html' import render_field  %}
 
@@ -7,9 +8,14 @@
 	    <form action='' method='POST'>
 	        {{ form.hidden_tag() }}
 	        {% for field in form %}
+				<br>	        
 	            {{render_field(field)}}
 	        {% endfor %}
-	        <button type='submit'>New Pet</button>
+	        <button type='submit'>Register Your Pet!</button>
 	    </form>
     </div>
+    <br><br><br><br><br><br><br><hr>
+	<div class="disclaimer">
+		<h7>PetShare is not responsible for the actions of the individuals registered on the site, or their pets. PetShare will not interject in any disputes stemming from the actions of any individual or pet registered on this site. PetShare does not endorse exchanging payments online. By registering on PetShare, users agree to absolve PetShare of any and all responsibility for the actions of any individuals registered on the site, or their pets.</h7>
+	</div>
 {% endblock %}

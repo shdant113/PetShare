@@ -16,7 +16,7 @@ html {
 	background-color: rgba(0, 0, 128, 0.5);
 }
 
-.general-header, .info-header, label, button, input {
+.general-header, .info-header, label, button, input, .disclaimer {
 	font-family: 'Domine', serif;
 	font-weight: 800;
 	color: navy;
@@ -28,6 +28,10 @@ html {
 
 .info-header {
 	font-size: 20px;
+}
+
+.disclaimer {
+	font-size: 12px;
 }
 
 label, button, input {
