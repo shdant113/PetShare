@@ -1,3 +1,4 @@
+<link href="https://fonts.googleapis.com/css?family=Domine" rel="stylesheet"> 
 {% extends "layout.html" %}
 {% from 'macros.html' import render_field  %}
 
@@ -7,8 +8,10 @@
 		<form action="" method="POST">
 			{{ form.hidden_tag() }}
 			{% for field in form %}
+				<br>
 				{{render_field(field)}}
 			{% endfor %}
+			<button type='submit'>Send Your Message!</button>
 		</form>
 	</div>
 	<br><br><br><br><br><br><br><hr>

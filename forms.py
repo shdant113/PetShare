@@ -147,14 +147,11 @@ class PetForm(Form):
 ''' new message '''
 class MessageForm(Form):
     content = TextAreaField(
-        "Type your message below",
+        "Type your message below.",
         validators = [
             DataRequired(),
             Length(min = 0, max = 500)
         ]
-    )
-    submit = SubmitField(
-        "Submit"
     )
 
 class UserUpdateForm(Form):

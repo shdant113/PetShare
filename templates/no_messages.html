@@ -1,8 +1,10 @@
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='messages.css')}}">
+<link href="https://fonts.googleapis.com/css?family=Domine" rel="stylesheet">
 {% extends "layout.html" %}
 
 {% block content %}
 	
-	<h1>Your Messages</h1>
-	<h3>You have no messages!</h3>
+	<h2 class="general-header">Your Messages</h2>
+	<h3 id="no-messages">You have no messages!</h3>
 
 {% endblock %}

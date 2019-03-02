@@ -51,3 +51,8 @@ ul {
 li {
 	list-style: none;
 }
+
+textarea {
+	min-height: 150px;
+	min-width: 500px;
+}
