@@ -4,7 +4,7 @@ from wtforms import SelectField, StringField, PasswordField, TextAreaField, Date
 from wtforms.validators import (DataRequired, Regexp, ValidationError, Email,
                                 Length, EqualTo)
 
-''' custom validators '''
+''' custom validators for registration '''
 
 def username_exists(form, field):
     if User.select().where(User.username == field.data).exists():
@@ -17,7 +17,6 @@ def display_name_exists(form, field):
 def email_exists(form, field):
     if User.select().where(User.email == field.data).exists():
         raise ValidationError('User with that email already exists.')
-
 
 ''' registration '''
 class RegisterForm(Form):
@@ -124,8 +123,7 @@ class PetForm(Form):
     name = StringField(
         "What is your pet's name?",
         validators = [
-            DataRequired(),
-            # pet_exists
+            DataRequired()
         ]
     )
     pet_type = StringField(
