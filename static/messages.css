@@ -1,3 +1,8 @@
+#view-message-content {
+	display: flex;
+	flex-wrap: wrap-reverse;
+}
+
 #no-messages {
 	font-family: 'Domine', serif;
 	font-weight: 800;

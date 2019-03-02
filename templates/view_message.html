@@ -4,8 +4,8 @@
 {% from 'macros.html' import render_field  %}
 
 {% block content %}
+	<h2 class="general-header">Your Messages</h2>
 	<div id="view-message-content">
-		<h2 class="general-header">Your Messages</h2>
 		{% for message in messages %}
 			<div class="card">
 				<h3 id="new-message">New message from {{ message.sender.username }}!</h3>
