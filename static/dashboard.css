@@ -1,3 +1,52 @@
 .dash-content {
-	font-size: 100px;
+	margin: 0 10px;
 }
+
+.card-head > a, .card-text > a, .card-head, .dash-content > h5 {
+	color: navy;
+}
+
+.dash-content > h5, .card-text {
+	font-family: 'Patrick Hand', cursive;
+}
+
+.dash-content > h5 {
+	font-size: 20px;
+}
+
+.card-text {
+	font-size: 18px;
+	font-weight: 500;
+}
+
+.feed {
+	display: flex;
+	flex-wrap: wrap-reverse;
+	margin: 10px auto;
+}
+
+.card { 
+	margin: 10px auto;
+	background-color: rgba(255, 255, 255, 0.4);
+	border-radius: 10px;
+	min-width: calc(50% - 50px); 
+	border: 3px solid navy;
+}
+
+.card-head {
+	font-family: 'Domine', serif;
+	font-weight: 800;
+	font-size: 20px;
+}
+
+.card-head > a, .card-text > a {
+	text-decoration: none;
+}
+
+.card-head > a:hover, .card-text > a:hover {
+	color: rgba(255, 255, 255, 0.8);
+	background-color: navy;
+	padding: 5px;
+	border-radius: 20px;
+}
+
