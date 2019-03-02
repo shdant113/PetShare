@@ -13,7 +13,8 @@ body, html {
 }
 
 html {
-	background-color: rgba(0, 0, 128, 0.5);
+	background: cover no-repeat;
+	background-image: url('https://animalhospitalschampionsnorthwestjonesrd.files.wordpress.com/2014/02/dogsatdogpark.jpg');
 }
 
 .general-header, .info-header, label, select, button, textarea, input, .disclaimer {
