@@ -37,3 +37,12 @@ label, button, input {
 input, button {
 	width: 150px;
 }
+
+ul {
+	padding: 0;
+	margin: 0;
+}
+
+li {
+	list-style: none;
+}

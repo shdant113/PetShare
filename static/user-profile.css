@@ -1,0 +1,49 @@
+#user-profile-content, #user-posts {
+	background-color: rgba(255, 255, 255, 0.4);
+	border: 2px solid navy;
+	border-radius: 20px;
+}
+
+#user-profile-content {
+	margin: 10px auto;
+	width: max-content;
+	padding: 0 100px;
+}
+
+#user-posts {
+	margin: 10px;
+}
+
+#profile-info > h5, #bio, #pets-ul {
+	font-family: 'Patrick Hand', cursive;
+}
+
+#profile-info > h5, #pets-info, #user-posts > h5 {
+	font-size: 20px;
+	margin: 5px;
+	color: navy;
+}
+
+#bio, #pets-ul {
+	font-size: 18px;
+	font-weight: 500;
+	color: navy;
+}
+
+#pets-info, #profile-crud > a, #send-a-message > a {
+	font-family: 'Domine', serif;
+	font-weight: 800;
+	color: navy;
+}
+
+.card-head > a, .card-text > a, #pets-ul > li > a, #profile-crud > a, #send-a-message > a {
+	text-decoration: none;
+	color: navy;
+}
+
+.card-head > a:hover, .card-text > a:hover, #pets-ul > li > a:hover, #profile-crud > a:hover, #send-a-message > a:hover {
+	color: rgba(255, 255, 255, 0.8);
+	background-color: navy;
+	padding: 5px;
+	border-radius: 20px;
+}

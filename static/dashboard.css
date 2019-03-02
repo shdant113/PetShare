@@ -39,14 +39,13 @@
 	font-size: 20px;
 }
 
-.card-head > a, .card-text > a {
+.card-head > a, .card-text > a, .dash-content > a {
 	text-decoration: none;
 }
 
-.card-head > a:hover, .card-text > a:hover {
+.card-head > a:hover, .card-text > a:hover, .dash-content > a:hover {
 	color: rgba(255, 255, 255, 0.8);
 	background-color: navy;
 	padding: 5px;
 	border-radius: 20px;
 }
-
