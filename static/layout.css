@@ -29,11 +29,11 @@
 	font-family: 'Cardo', serif;
 	font-weight: 400;
 	margin: 20px;
-	padding: 0 30px;
+	padding: 0 15px;
 }
 
 .nav-link:hover {
 	color: navy;
 	background-color: white;
-	padding: 10px 30px;
+	padding: 10px 15px;
 }
