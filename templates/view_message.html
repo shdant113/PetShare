@@ -1,12 +1,14 @@
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='messages.css')}}">
+<link href="https://fonts.googleapis.com/css?family=Domine|Patrick+Hand" rel="stylesheet">
 {% extends "layout.html" %}
 {% from 'macros.html' import render_field  %}
 
 {% block content %}
-	<div class="view-message-content">
+	<div id="view-message-content">
 		<h2 class="general-header">Your Messages</h2>
 		{% for message in messages %}
-			<div class="card" style="width: 22rem;">
-				<h3 class="new-message">New message from {{ message.sender.username }}!</h3>
+			<div class="card">
+				<h3 id="new-message">New message from {{ message.sender.username }}!</h3>
 				<h5>At 
 					<time data-time="{{ message.timestamp }}" class="distime" datetime="{{ message.timestamp.strftime('%H:%M') }}">
 						{{ message.timestamp.strftime('%H:%M') }}
@@ -17,7 +19,7 @@
 					</time>
 					, {{ message.sender.username}} said:
 				</h5>
-				<p>
+				<p id="message-content-p">
 					{{ message.content }}
 				</p>
 				<br>

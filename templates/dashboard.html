@@ -35,10 +35,10 @@
 							{{ post.user.location }} <br><br>
 							Other important details: <br>
 							{{ post.content }} <br><br>
-							{% if post.user != current_user %}
-								<a href="{{ url_for('send_message', recipient = post.user.id) }}">Send {{ post.user.display_name }} a message!</a>
-							{% endif %}
 						</p>
+						{% if post.user != current_user %}
+							<a href="{{ url_for('send_message', recipient = post.user.id) }}">Send {{ post.user.display_name }} a message!</a>
+						{% endif %}
 					</div>
 				</div>
 			{% endfor %}

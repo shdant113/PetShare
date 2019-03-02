@@ -1,6 +1,38 @@
 #no-messages {
 	font-family: 'Domine', serif;
 	font-weight: 800;
-	color: navy;
 	font-size: 20px;
+}
+
+.card, #message-content-p {
+	border-radius: 10px;
+	background-color: rgba(255, 255, 255, 0.4);
+	border: 3px solid navy;
+}
+
+#no-messages, #new-message, .card > h5 {
+	color: navy;
+}
+
+.card { 
+	margin: 10px auto;
+	width: 50%;
+}
+
+#new-message, .card > h5, #message-content-p {
+	font-family: 'Patrick Hand', cursive;
+}
+
+#new-message {
+	font-size: 25px;
+}
+
+.card > h5 {
+	font-size: 18px;
+}
+
+#message-content-p {
+	font-size: 15px;
+	margin: 0 20px;
+	padding: 20px;
 }

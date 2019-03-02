@@ -2,11 +2,11 @@
 	margin: 0 10px;
 }
 
-.card-head > a, .card-text > a, .card-head, .dash-content > h5 {
+.card-head > a, .card-body > a, .card-head, .dash-content > h5 {
 	color: navy;
 }
 
-.dash-content > h5, .card-text {
+.dash-content > h5, .card-text, .card-body > a {
 	font-family: 'Patrick Hand', cursive;
 }
 
@@ -17,6 +17,8 @@
 .card-text {
 	font-size: 18px;
 	font-weight: 500;
+	margin: 0 20px 20px 20px;
+	padding: 20px;
 }
 
 .feed {
@@ -25,12 +27,16 @@
 	margin: 10px auto;
 }
 
+.card, .card-text {
+	border-radius: 10px;
+	background-color: rgba(255, 255, 255, 0.4);
+	border: 3px solid navy;
+}
+
 .card { 
 	margin: 10px auto;
-	background-color: rgba(255, 255, 255, 0.4);
-	border-radius: 10px;
 	min-width: calc(50% - 50px); 
-	border: 3px solid navy;
+	padding-bottom: 10px;
 }
 
 .card-head {
@@ -39,11 +45,11 @@
 	font-size: 20px;
 }
 
-.card-head > a, .card-text > a, .dash-content > a {
+.card-head > a, .card-body > a, .dash-content > a {
 	text-decoration: none;
 }
 
-.card-head > a:hover, .card-text > a:hover, .dash-content > a:hover {
+.card-head > a:hover, .card-body > a:hover, .dash-content > a:hover {
 	color: rgba(255, 255, 255, 0.8);
 	background-color: navy;
 	padding: 5px;

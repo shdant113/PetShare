@@ -16,7 +16,7 @@ html {
 	background-color: rgba(0, 0, 128, 0.5);
 }
 
-.general-header, .info-header, label, button, input, .disclaimer {
+.general-header, .info-header, label, select, button, textarea, input, .disclaimer {
 	font-family: 'Domine', serif;
 	font-weight: 800;
 	color: navy;
@@ -34,7 +34,7 @@ html {
 	font-size: 12px;
 }
 
-label, button, input {
+label, button, input, select, textarea {
 	margin: 5px;
 	font-size: 15px;
 }
@@ -55,4 +55,5 @@ li {
 textarea {
 	min-height: 150px;
 	min-width: 500px;
+	text-align: center;
 }
