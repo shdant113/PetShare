@@ -104,7 +104,7 @@ class PostForm(Form):
 
 class UpdatePostForm(Form):
     content = TextAreaField(
-        "List all the details",
+        "List all the details.",
         validators = [
             DataRequired()
         ]
@@ -113,7 +113,9 @@ class UpdatePostForm(Form):
         "When do you need a pet sitter?", format='%m/%d/%y',
         default = datetime.datetime.now,
         validators = [
-            DataRequired()
+            DataRequired(
+                message = 'Input the month, date, and year, e.g. 01/01/2000'
+            )
         ]
     )
 
