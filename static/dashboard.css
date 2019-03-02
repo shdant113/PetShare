@@ -35,7 +35,7 @@
 
 .card { 
 	margin: 10px auto;
-	min-width: calc(50% - 50px); 
+	width: 50%; 
 	padding-bottom: 10px;
 }
 
