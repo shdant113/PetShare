@@ -7,14 +7,14 @@ import os
 from playhouse.db_url import connect
 
 ''' for local testing, use local database '''
-DATABASE = PostgresqlDatabase(
-	'pets',
-	user = 's_admin',
-	password = 'administrator'
-) 
+# DATABASE = PostgresqlDatabase(
+# 	'pets',
+# 	user = 's_admin',
+# 	password = 'administrator'
+# ) 
 
 ''' for deployed version, use deployed database '''
-# DATABASE = connect(os.environ.get('DATABASE_URL'))
+DATABASE = connect(os.environ.get('DATABASE_URL'))
 
 class User(UserMixin, Model):
 	username = CharField(unique=True)
