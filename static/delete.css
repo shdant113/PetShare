@@ -1,0 +1,22 @@
+#confirm-delete-content {
+	margin: 10px;
+}
+
+#confirm-delete-content > h5 {
+	font-family: 'Patrick Hand', cursive;
+	font-size: 20px;
+}
+
+#confirm-delete-content > a {
+	font-family: 'Domine', serif;
+	font-weight: 800;
+	color: navy;
+	text-decoration: none;
+}
+
+#confirm-delete-content > a:hover {
+	color: rgba(255, 255, 255, 0.8);
+	background-color: navy;
+	padding: 5px;
+	border-radius: 20px;
+}
