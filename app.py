@@ -175,7 +175,7 @@ def update_user(id):
 				bio = form.bio.data
 			).where(models.User.id == id)
 			u.execute()
-			return redirect(url_for('dashboard'))
+			return redirect(url_for('get_profile', id = id))
 		return render_template('edit-user.html', form=form, user=user)
 	else:
 		return render_template('404.html')
