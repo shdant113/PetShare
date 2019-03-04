@@ -6,15 +6,16 @@ import os
 
 from playhouse.db_url import connect
 
-''' for local testing, use local database '''
-DATABASE = PostgresqlDatabase(
-	'pets',
-	user = 's_admin',
-	password = 'administrator'
-) 
-
-''' for deployed version, use deployed database '''
-# DATABASE = connect(os.environ.get('DATABASE_URL'))
+if 'ON_HEROKU' in os.environ:
+	''' for deployed version, use deployed database '''
+	DATABASE = connect(os.environ.get('DATABASE_URL'))
+else:
+	''' for local testing, use local database '''
+	DATABASE = PostgresqlDatabase(
+		'pets',
+		user = 's_admin',
+		password = 'administrator'
+	) 
 
 class User(UserMixin, Model):
 	username = CharField(unique=True)

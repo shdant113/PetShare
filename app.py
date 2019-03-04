@@ -367,10 +367,9 @@ def delete_message(id):
 if 'ON_HEROKU' in os.environ:
 	print('deployed ')
 	models.init_database()
-
-''' initialize database '''
-if __name__ == '__main__':
-    models.init_database()
-
-''' only needs to be run for local testing -- gunicorn does this on heroku '''
-app.run(debug = config.DEBUG, port = config.PORT, host='0.0.0.0')
+else:
+	if __name__ == '__main__':
+		''' initialize database '''
+		models.init_database()
+		''' only needs to be run for local testing -- gunicorn does this on heroku '''
+		app.run(debug = config.DEBUG, port = config.PORT, host='0.0.0.0')
