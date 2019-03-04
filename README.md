@@ -1,25 +1,37 @@
-## User Stories
+# PetShare
 
-### Upon visiting the site:
-1. The user is prompted to log in. If they do not have an account, they can click the "register" button, which will direct them to a registration form. Upon successful submission of either form, they will be logged into the site.
-2. The user is required to have a username and password in order to log in. In order to register, a user will be required to have a username, password, email, prefered display name, and location. They will be able to add a user bio later on their profile.
+#### Created by Spencer Dant (CHI) and Peter Feinman (LA)
 
-### Once logged in:
-1. If the user owns a pet, they can create a pet. The user will be prompted to enter the pet's name, type (i.e. cat, dog, etc.) and age as well as any special requirements their pet has for pet sitting. The database will automatically store when the pet was created and assign the user as the owner of the pet.  
-2. The user can see posts of each available pet sitting session. If they have registered a pet, they will also be able to add their own posts to find a pet sitter.
-3. The user can also visit their own profile, which will allow them to update their bio and see all of their information.
+---
 
-### Posts:
-1. Each post will be related to a user whose username (or display name) will be displayed with their post. Users can visit the profiles of the people that made each post and also press a the "I can help!" button, indicating that they are available to pet sit. When the button is pressed, the user that created the post will be able to either accept or decline. If they accept, the post disappears from the page and its contents are added to the current schedule of both the sitter and the owner.
+Have a pet but want to take a few days off? Don't want the responsibility of taking care of a pet for life but wouldn't mind one for the weekend? PetShare is a place for pet owners and pet lovers alike. Register at https://petshare-app.herokuapp.com/.
 
-### Notifications:
-1. When a sitter is requesting acceptance on a post, the poster will receive a badge notification in the header. The notification will disappear only when action is taken on it. 
+---
 
-### Stretch goals:
-1. Image uploading --> a site with pets is not complete without pictures of said pets, and having head shots of the person you're asking to sit for you might be good for peace of mind.
-2. Location services --> ensuring the accuracy of the location that people sign up with and use, plus allowing us to filter the posts that people see based on their location.
-3. Payment services --> to begin with, there will be no payments made on the site.
-4. Email notifications --> each badge notification prompts an automatic email, and sitters and owners can communicate with each other directly by email prior to meeting or accepting a job.
+PetShare was built with Python using Flask on a SQL database. The front end is templated with Jinja. 
+
+---
+
+## Navigating PetShare
+
+Upon visiting the site, the user is prompted to log in. If the user does not have an account, they can register. Upon successful validation of either their registration or login, they will automatically be logged into the site. 
+
+Users can sign up with a username and email but their display name will be most prominent on the site. Display names are featured on their profile, in each of their posts, and in their interactions with other users. Users can message each other by accessing one another's profiles or simply using the link provided in each post, enabling users to inquire about available pet sitting opportunities and make appropriate arrangements.
+
+In order to create a post, the user must first register a pet. Once they provide the necessary information about their pet, the user can create their post and expect messages from other members shortly. At their convenience, they can log back in and will receive a notification on their dashboard if they have unread messages from other users. Once those messages are read, the notification will no longer appear, but the messages will be available in their message inbox unless the user chooses to delete them or the sender deletes their account on PetShare.
+
+Users can see posts from any location but are encouraged to message only users in their immediate area.
+
+Users can update their bio as well as edit information about their pets from their profile. They can also erase their account if they choose from their profile.
+
+---
+
+## Forthcoming:
+1. Image uploading 
+2. Email notifications
+3. Location filtering
+
+---
 
 ## Wireframes:
 
