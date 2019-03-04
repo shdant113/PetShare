@@ -218,19 +218,22 @@ def delete_post(id):
 @login_required
 @app.route('/posts/<id>/edit', methods=('GET', 'POST'))
 def update_post(id):
-	post = models.Post.select().where(models.Post.id == id).get()
 	# as above, get user id so they can be redirected to their profile
 	userid = models.User.select().where(models.User.id == current_user.id).get()
+	post = models.Post.select().where(models.Post.id == id).get()
 	if current_user == post.user:
 		form = forms.UpdatePostForm(
 			content = post.content,
 		)
+		print(form)
 		if form.validate_on_submit():
-			p = models.Post.update(
+			print(post.content)
+			query = post.update(
 				content = form.content.data,
 				requested_time = form.requested_time.data
-			)
-			p.execute()
+			).where(models.Post.id == id)
+			query.execute()
+			print(post.content)
 			return redirect(url_for('get_profile', id = userid))
 		return render_template('edit-post.html', form=form)
 	else:
@@ -370,4 +373,4 @@ if __name__ == '__main__':
     models.init_database()
 
 ''' only needs to be run for local testing -- gunicorn does this on heroku '''
-# app.run(debug = config.DEBUG, port = config.PORT)
+app.run(debug = config.DEBUG, port = config.PORT, host='0.0.0.0')
